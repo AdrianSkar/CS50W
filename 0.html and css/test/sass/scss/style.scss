@@ -1,0 +1,28 @@
+$color: green;
+$h1-size: 0.8em;
+$font1: 'Roboto', 'Arial', sans-serif;
+$font2: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+
+h1 {
+	font-size: $h1-size;
+	color: $color;
+}
+
+div{
+	font-family: $font1;
+	label{
+		font-family: $font2;
+			code{
+				color: rgb(56, 39, 18);
+			}
+	}
+	p#test{
+		color:rgb(192, 19, 126)
+	}
+}
+
+span{
+	@extend div;
+	color: blue;
+}
+

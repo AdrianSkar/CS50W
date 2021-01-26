@@ -1,0 +1,23 @@
+h1 {
+  font-size: 0.8em;
+  color: green;
+}
+
+div, span {
+  font-family: "Roboto", "Arial", sans-serif;
+}
+div label, span label {
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+}
+div label code, span label code {
+  color: #382712;
+}
+div p#test, span p#test {
+  color: #c0137e;
+}
+
+span {
+  color: blue;
+}
+
+/*# sourceMappingURL=style.css.map */
