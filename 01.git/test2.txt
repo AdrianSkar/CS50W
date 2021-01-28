@@ -1,2 +1,2 @@
 test
-conflict 1
+Resolved both conflicts
