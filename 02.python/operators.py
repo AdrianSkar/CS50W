@@ -1,6 +1,5 @@
 # Ref: https://www.w3schools.com/python/python_operators.asp
 
-
 # Arithmetic ones
 x = 2
 y = 3

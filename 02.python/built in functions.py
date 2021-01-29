@@ -1,5 +1,6 @@
 # Ref: https://docs.python.org/3/library/functions.html
 
+import platform
 c = [1, 2, 3, 4, 5]
 d = ''
 
@@ -48,3 +49,12 @@ print(e)
 
 for x in e:
 	print(x)
+
+#built-in platform
+print(platform.system())
+print(platform.version())
+print(platform.processor())
+print(platform.python_version())
+print(platform.uname())
+# Print all platform function names
+print(dir(platform))
