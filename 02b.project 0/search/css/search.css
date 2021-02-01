@@ -1,0 +1,120 @@
+body {
+  background-color: #fff;
+  color: #202114;
+  font-family: arial, sans-serif;
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-rows: 1fr 10fr;
+      grid-template-rows: 1fr 10fr;
+  font-size: 13px;
+  padding: 0;
+  margin: 0;
+}
+
+header {
+  display: -ms-grid;
+  display: grid;
+  justify-items: end;
+  padding: 0 1em;
+}
+
+.top_menu {
+  padding: 0.8em;
+  list-style-type: none;
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: 1fr 1fr;
+      grid-template-columns: 1fr 1fr;
+}
+
+.top_menu a {
+  text-decoration: none;
+  color: #202114;
+}
+
+.top_menu a:hover {
+  text-decoration: underline;
+}
+
+.search_button {
+  background-color: #f8f9fa;
+  padding: 0.7em;
+  border: 1px solid #fff;
+  border-radius: 4px;
+}
+
+.search_button:first-of-type {
+  margin-right: 0.5em;
+}
+
+.search_button:hover {
+  border: 1px solid #dadce0;
+  -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+          box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+}
+
+main {
+  margin: 0 auto;
+  padding: 2em;
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-rows: auto 1fr;
+      grid-template-rows: auto 1fr;
+  text-align: center;
+}
+
+img {
+  max-width: 21em;
+  -ms-grid-column-align: center;
+      justify-self: center;
+}
+
+main {
+  padding-top: 5em;
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-rows: auto 1fr 1fr;
+      grid-template-rows: auto 1fr 1fr;
+  gap: 1em;
+}
+
+#search_wrapper {
+  font-size: small;
+  border: 1px solid #dfe1e5;
+  border-radius: 24px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  margin: 0 auto;
+  padding: 0.6em 1em;
+  min-width: 60vw;
+  -webkit-box-align: end;
+      -ms-flex-align: end;
+          align-items: flex-end;
+}
+
+#search_wrapper svg {
+  width: 1.2em;
+  padding-right: 1em;
+  fill: #9aa0a6;
+}
+
+#search_wrapper:hover {
+  border: 1px solid #dadce0;
+  -webkit-box-shadow: 0 1px 6px rgba(32, 33, 36, 0.28);
+          box-shadow: 0 1px 6px rgba(32, 33, 36, 0.28);
+}
+
+@media (min-width: 800px) {
+  #search_wrapper {
+    min-width: 500px;
+    max-width: 70vw;
+  }
+}
+
+#search_input {
+  border: none;
+  outline: none;
+  width: 100%;
+}
+/*# sourceMappingURL=search.css.map */

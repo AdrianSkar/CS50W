@@ -1,0 +1,29 @@
+body {
+  background-color: #fff;
+  color: #202114;
+  font-family: arial, sans-serif;
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-rows: 1fr 10fr;
+      grid-template-rows: 1fr 10fr;
+}
+
+li {
+  list-style-type: none;
+}
+
+header {
+  background-color: #e6e6e6;
+}
+
+main {
+  background-color: #cccccc;
+  margin: 0 auto;
+  padding: 2em;
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-rows: auto 1fr;
+      grid-template-rows: auto 1fr;
+  text-align: center;
+}
+/*# sourceMappingURL=style.css.map */

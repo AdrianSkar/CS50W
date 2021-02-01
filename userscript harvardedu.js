@@ -27,10 +27,8 @@ WebFont.load({
 		families: ['PT Sans', 'PT Sans:bold', 'PT Sans:ital']
 	}
 });
-console.log('testOut')
 // On DOMContentLoaded
 
-console.log('test2')
 // Current timestamp
 const now = luxon.DateTime.local();
 
