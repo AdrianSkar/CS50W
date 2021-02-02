@@ -114,4 +114,36 @@ main {
   outline: none;
   width: 100%;
 }
-/*# sourceMappingURL=search.css.map */
+
+.images {
+  left: 7.6em;
+  position: relative;
+  top: -1.6em;
+  color: #518ae8;
+}
+
+main {
+  gap: 0;
+}
+
+#search_wrapper svg {
+  width: 1.6em;
+  height: 1.6em;
+  -webkit-box-align: baseline;
+      -ms-flex-align: baseline;
+          align-items: baseline;
+}
+
+#image_search {
+  border: none;
+  background-color: transparent;
+  width: 1.4em;
+  height: 1.4em;
+  padding-right: 1.4em;
+}
+
+#image_search svg {
+  fill: #518ae8;
+  padding: 0;
+}
+/*# sourceMappingURL=images.css.map */

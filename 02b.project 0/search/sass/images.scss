@@ -1,0 +1,32 @@
+@import "search";
+$imagesColor: rgb(81, 138, 232);
+
+.images{
+	left: 7.6em;
+	position: relative;
+	top: -1.6em;
+	color: $imagesColor;
+}
+
+main{
+	gap: 0;
+}
+
+#search_wrapper svg{
+	width: 1.6em;
+	height: 1.6em;
+	align-items: baseline;
+}
+
+#image_search{
+	border: none;
+	background-color: transparent;
+	svg{
+		fill: $imagesColor;
+		padding:0;
+
+	}
+	width: 1.4em;
+	height: 1.4em;
+	padding-right: 1.4em;
+}
