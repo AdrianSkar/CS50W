@@ -81,7 +81,7 @@ form {
 		gap: 2em;
 	}
 	#adv_submit {
-		margin-right: 0vw;
+		margin-right: 0;
 	}
 }
 
@@ -90,5 +90,8 @@ form {
 		grid-template-columns: 1fr;
 		gap: 1em;
 		margin-right: 2em;
+	}
+	#adv_submit {
+		margin-right: 1.8em;
 	}
 }
