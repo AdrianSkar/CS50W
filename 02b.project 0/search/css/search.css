@@ -96,7 +96,7 @@ main {
   fill: #9aa0a6;
 }
 
-#search_wrapper:hover {
+#search_wrapper:hover, #search_wrapper:focus, #search_wrapper:focus-within {
   border: 1px solid #dadce0;
   -webkit-box-shadow: 0 1px 6px rgba(32, 33, 36, 0.28);
           box-shadow: 0 1px 6px rgba(32, 33, 36, 0.28);

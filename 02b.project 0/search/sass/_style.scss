@@ -32,18 +32,16 @@ header {
 	}
 }
 
-.search_button{
+.search_button {
 	background-color: #f8f9fa;
 	padding: 0.7em;
 	border: 1px solid $bgcolor;
-	// box-shadow: 0 1px 1px rgb(0 0 0 / 10%);
-	// box-shadow: 0 10px 10px rgb(0 0 0 / 80%);
 	border-radius: 4px;
-	&:first-of-type{
-		margin-right:0.5em;
+	&:first-of-type {
+		margin-right: 0.5em;
 	}
-	&:hover{
+	&:hover {
 		border: 1px solid #dadce0;
-		box-shadow: 0 1px 1px rgba(0,0,0,0.1);
+		box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
 	}
 }

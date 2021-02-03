@@ -2,7 +2,6 @@
 @import "style";
 
 main {
-	// background-color: darken($bgcolor, 20%);
 	margin: 0 auto;
 	padding: 2em;
 	display: grid;
@@ -10,20 +9,19 @@ main {
 	text-align: center;
 }
 
-img{
+img {
 	max-width: 21em;
 	justify-self: center;
 }
 
-main{
+main {
 	padding-top: 5em;
 	display: grid;
 	grid-template-rows: auto 1fr 1fr;
-	gap:1em;
-	// text-align: center;
+	gap: 1em;
 }
 
-#search_wrapper{
+#search_wrapper {
 	font-size: small;
 	border: 1px solid #dfe1e5;
 	border-radius: 24px;
@@ -33,28 +31,26 @@ main{
 	min-width: 60vw;
 
 	// Magnifier icon
-	// align-items: flex-end;
-	svg{
+	svg {
 		width: 1.2em;
-		// height: 20px;
 		padding-right: 1em;
 		fill: #9aa0a6;
 	}
 	// Hover
-	&:hover{
+	&:hover,
+	&:focus,
+	&:focus-within {
 		border: 1px solid #dadce0;
-		box-shadow: 0 1px 6px rgba(32,33,36,0.28);
+		box-shadow: 0 1px 6px rgba(32, 33, 36, 0.28);
 	}
-	@media (min-width:800px){
+	@media (min-width: 800px) {
 		min-width: 500px;
 		max-width: 70vw;
 	}
-
-
 }
 
-#search_input{
-	border: none;	
+#search_input {
+	border: none;
 	outline: none;
 	width: 100%;
 }
