@@ -36,6 +36,10 @@ for person in people:
 	else:
 		print(f"No seats left, {person} is out.")
 
+print(flight.open_seats())
+print(flight.passengers)
+print(flight.capacity)
+
 print(flight.test)
 flight.test = 32
 print(flight.test)
@@ -46,4 +50,5 @@ print(flight.test)
 print(Flight.test)
 # Deletes the property
 del Flight.test
-# print(Flight.test) # Err: Flight has no attribute test
+# print(Flight.test) # AttributeError: Flight has no attribute test
+# print(flight.test) # AttributeError: Flight has no attribute test
