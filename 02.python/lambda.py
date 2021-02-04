@@ -12,7 +12,7 @@ lambda arguments(any):expression(one)
 
 
 def square(param):
-    return param * param
+	return param * param
 
 
 print(square(2))
@@ -29,9 +29,9 @@ print(squareL(4))
 # sort() won't work with dicts
 
 people = [
-    {'name': 'Timmy', 'age': 234},
-    {'name': 'Aaron', 'age': 24},
-    {'name': 'Kyle', 'age': 17}
+	{'name': 'Timmy', 'age': 234},
+	{'name': 'Aaron', 'age': 24},
+	{'name': 'Kyle', 'age': 17}
 ]
 # people.sort()  # TypeErr `< not supported between instances of dict and dict`
 people.sort(key=lambda x: x['name'])
@@ -49,10 +49,10 @@ print(people)
 
 
 def myfunc(n):
-    # def test(a):
-    #     return a * n
-    # return test
-    return lambda a: a * n
+	# def test(a):
+	#     return a * n
+	# return test
+	return lambda a: a * n
 
 
 mydoubler = myfunc(2)
