@@ -6,8 +6,13 @@ Add tasks
 
 {% block body %}
 <h1>Add task:</h1>
-<form action="">
-	<input type="text" name="task">
+<form action="{% url 'tasks:add' %}" method='post'>
+	{% csrf_token %}
+
+	{{ form }}</br>
+	Different var inside add at views.py: {{ test }}</br>
+	Render data: <br>
+	{{renderData}}<br>
 	<input type="submit">
 </form>
 <a href="{% url 'tasks:index' %}">View tasks</a>
