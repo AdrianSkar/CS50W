@@ -1,16 +1,17 @@
 body {
     margin: 0;
     background-color: white;
+    overflow-x: hidden;
 }
 
 code {
     white-space: pre;
 }
 
-h1 {
+/* h1 {
     margin-top: 0px;
     padding-top: 20px;
-}
+} */
 
 textarea {
     height: 90vh;
@@ -18,7 +19,7 @@ textarea {
 }
 
 .main {
-    padding: 10px;
+    padding: 1em;
 }
 
 .search {
@@ -30,9 +31,9 @@ textarea {
 .sidebar {
     background-color: #f0f0f0;
     height: 100vh;
-    padding: 20px;
+    padding: 1em 2em;
 }
 
-.sidebar h2 {
+/* .sidebar h2 {
     margin-top: 5px;
-}
+} */

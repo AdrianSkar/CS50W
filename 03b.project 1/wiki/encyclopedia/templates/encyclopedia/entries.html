@@ -1,0 +1,20 @@
+{% extends "encyclopedia/layout.html" %}
+
+{% block title %}
+{{ name }} - Encyclopedia
+{% endblock %}
+
+
+{% block body %}
+
+{% if title %}
+<h1>{{ title }}</h1>
+{% endif %}
+
+{% if entry %}
+{{ entry }}
+{% else %}
+We couldn't find any entry named <em>{{ name }}</em>
+{% endif %}
+
+{% endblock %}
