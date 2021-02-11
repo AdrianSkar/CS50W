@@ -35,3 +35,12 @@ def get_entry(title):
         return f.read().decode("utf-8")
     except FileNotFoundError:
         return None
+
+
+def subs(query):
+    output_list = []
+    entries = list_entries()
+    for entry in entries:
+        if query in entry:
+            output_list.append(entry)
+    return output_list
