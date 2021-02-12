@@ -1,8 +1,22 @@
 from django.test import TestCase
+from functools import reduce
 
 # Create your tests here.
-# strs = ['css', 'css3', 'python']
 
+
+all = ['CSS', 'CSS3', 'Python']
+query = 'c'
+
+result = list(filter(lambda k: query in k, all))
+print(result)
+
+if result:
+    print('yes')
+else:
+    print('no')
+
+
+# strs = ['css', 'css3', 'python']
 
 # def partial_result(query):
 # 	output_list = []
@@ -32,10 +46,9 @@ from django.test import TestCase
 # 	else:
 # 		print(f'not found in {entry}')
 
-output_list = ['asd']
+# output_list = ['asd']
 
-if output_list:
-	print('yes')
-else:
-	print('no')
-
+# if output_list:
+# 	print('yes')
+# else:
+# 	print('no')

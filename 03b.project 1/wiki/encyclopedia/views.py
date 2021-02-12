@@ -16,7 +16,6 @@ def index(request):
 	# form = NewSearchForm()
 		return render(request, "encyclopedia/index.html", {
                     "entries": util.list_entries(),
-                				# "form": form
 		})
 
 
@@ -40,15 +39,21 @@ def entries(request, entry):
 def search(request):
 	if request.method == "GET":
 		query = request.GET.get('query')
-		if util.get_entry(query):
+		substr = util.subs(query)
+
+		if util.get_entry(query):  # If we have such an entry
 			# Convert MD to HTML and mark it as safe to output
 			output = mark_safe(markdown2.markdown(util.get_entry(query)))
 			return render(request, "encyclopedia/entries.html", {
-                            "entry": output,
-                        })
-		elif util.subs(query):  # check if substring like in tests.py
-			print('test')
+														"entry": output,
+												})
+		elif substr:  # If query is substring of existing entries
+			# new_entries = list(filter(lambda k: query in k, util.list_entries()))
+			return render(request, 'encyclopedia/results.html', {
+				"entries": substr,
+				"query": query
+			})
 
 	return render(request, "encyclopedia/results.html", {
-            "query": "No query found named "+query
-        })
+            "test": "No query found named "+query+str(substr)
+				})

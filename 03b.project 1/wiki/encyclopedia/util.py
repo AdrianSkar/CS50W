@@ -37,10 +37,18 @@ def get_entry(title):
         return None
 
 
-def subs(query):
+def subs(query):  # LOWERCASE!!!
     output_list = []
     entries = list_entries()
     for entry in entries:
-        if query in entry:
+        test = entry.lower()
+        if query in test:
             output_list.append(entry)
     return output_list
+
+    # output_list = []
+    # entries = list_entries()
+    # for entry in entries:
+    #     if query in entry:
+    #         output_list.append(entry)
+    # return output_list
