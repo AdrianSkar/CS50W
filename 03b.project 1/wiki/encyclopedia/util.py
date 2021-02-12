@@ -10,7 +10,7 @@ def list_entries():
     """
     _, filenames = default_storage.listdir("entries")
     return list(sorted(re.sub(r"\.md$", "", filename)
-                for filename in filenames if filename.endswith(".md")))
+                       for filename in filenames if filename.endswith(".md")))
 
 
 def save_entry(title, content):
@@ -45,10 +45,3 @@ def subs(query):  # LOWERCASE!!!
         if query in test:
             output_list.append(entry)
     return output_list
-
-    # output_list = []
-    # entries = list_entries()
-    # for entry in entries:
-    #     if query in entry:
-    #         output_list.append(entry)
-    # return output_list

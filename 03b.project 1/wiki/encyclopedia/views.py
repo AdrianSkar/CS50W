@@ -46,6 +46,7 @@ def search(request):
 			output = mark_safe(markdown2.markdown(util.get_entry(query)))
 			return render(request, "encyclopedia/entries.html", {
 														"entry": output,
+														"name": query.capitalize()
 												})
 		elif substr:  # If query is substring of existing entries
 			# new_entries = list(filter(lambda k: query in k, util.list_entries()))
@@ -54,6 +55,7 @@ def search(request):
 				"query": query
 			})
 
+	# If no complete or partial match is found
 	return render(request, "encyclopedia/results.html", {
-            "test": "No query found named "+query+str(substr)
+            "no_match": query
 				})
