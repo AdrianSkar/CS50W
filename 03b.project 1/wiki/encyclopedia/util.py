@@ -37,11 +37,20 @@ def get_entry(title):
         return None
 
 
-def subs(query):  # LOWERCASE!!!
+# Is search query a substr of entries?
+def subs(query):
     output_list = []
     entries = list_entries()
     for entry in entries:
+        # Lowercase entries to compare them to the query
         test = entry.lower()
         if query in test:
             output_list.append(entry)
     return output_list
+
+
+def subs_filter(query):
+    # entries = list(list_entries())
+    # result = list(filter(lambda k: query in k.lower(), entries))
+    # return result
+    return list(filter(lambda k: query in k.lower(), list(list_entries())))

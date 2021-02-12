@@ -5,15 +5,33 @@ from functools import reduce
 
 
 all = ['CSS', 'CSS3', 'Python']
-query = 'c'
+query = 'C'
 
-result = list(filter(lambda k: query in k, all))
-print(result)
 
-if result:
-    print('yes')
-else:
-    print('no')
+
+
+def subs_filter(query):
+    # output_list = []
+    entries = all
+    result = list(filter(lambda k: query in k, entries))
+    return result
+
+print(subs_filter(query))
+
+# result = list(filter(lambda k: query in k, all))
+# print(result)
+
+# if result:
+#     print('yes')
+# else:
+#     print('no')
+
+# numbers = [1, 2, 3, 4]
+
+# filtered_numbers = [number for number in numbers if number < 3]
+
+# print(filtered_numbers)
+
 
 
 # strs = ['css', 'css3', 'python']

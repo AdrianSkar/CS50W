@@ -39,7 +39,7 @@ def entries(request, entry):
 def search(request):
 	if request.method == "GET":
 		query = request.GET.get('query')
-		substr = util.subs(query)
+		substr = util.subs_filter(query)
 
 		if util.get_entry(query):  # If we have such an entry
 			# Convert MD to HTML and mark it as safe to output
