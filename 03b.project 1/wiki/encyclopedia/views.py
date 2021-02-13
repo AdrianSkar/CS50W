@@ -67,6 +67,8 @@ def new(request):
 	if request.method == "POST":
 		title = request.POST['title']
 		content = request.POST['content']
+
+		# If the page already exists
 		if util.get_entry(title):
 			# prints the relative url only (YET)
 			link = request.build_absolute_uri(reverse("entries", args=[title]))
@@ -76,7 +78,12 @@ def new(request):
 				"title": title,
 				"error_message": mark_safe(f"Sorry, an article titled <i>'{title}'</i> already exists at {link}.")
 			})
-		return render(request, "encyclopedia/results.html", {
-			"no_match": title + content
-		})
+
+		# Otherwise
+		# - save entry
+		util.save_entry(title, content)
+		# - redirect
+		return HttpResponseRedirect(reverse('entries', args=[title]))
+
+	# If method was GET
 	return render(request, "encyclopedia/new.html")
