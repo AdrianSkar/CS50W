@@ -1,7 +1,7 @@
 {% extends "encyclopedia/layout.html" %}
 
 {% block title %}
-{{ name }} - Encyclopedia
+Error adding {{ title }} - Encyclopedia
 {% endblock %}
 
 
@@ -11,10 +11,5 @@
 <h1>{{ title }}</h1>
 {% endif %}
 
-{% if entry %}
-{{ entry }}
-{% else %}
-We couldn't find any entry named "<em>{{ name }}"</em>.
-{% endif %}
-
+<p>{{ error_message }}</p>
 {% endblock %}

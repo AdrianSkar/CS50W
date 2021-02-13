@@ -4,19 +4,15 @@ from functools import reduce
 # Create your tests here.
 
 
-all = ['CSS', 'CSS3', 'Python']
-query = 'C'
+# all = ['CSS', 'CSS3', 'Python']
+# query = 'C'
+# def subs_filter(query):
+#     # output_list = []
+#     entries = all
+#     result = list(filter(lambda k: query in k, entries))
+#     return result
 
-
-
-
-def subs_filter(query):
-    # output_list = []
-    entries = all
-    result = list(filter(lambda k: query in k, entries))
-    return result
-
-print(subs_filter(query))
+# print(subs_filter(query))
 
 # result = list(filter(lambda k: query in k, all))
 # print(result)
