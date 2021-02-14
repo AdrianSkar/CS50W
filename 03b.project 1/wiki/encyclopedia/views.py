@@ -15,7 +15,7 @@ from django.utils.safestring import mark_safe
 
 def index(request):
 		return render(request, "encyclopedia/index.html", {
-                    "entries": util.list_entries(),
+										"entries": util.list_entries(),
 		})
 
 
@@ -87,3 +87,19 @@ def new(request):
 
 	# If method was GET
 	return render(request, "encyclopedia/new.html")
+
+
+def edit(request, title):
+	article = util.get_entry(title)
+	# Save on POST
+	if request.method == "POST":
+		content = request.POST['content']
+		util.save_entry(title, content)
+
+		return HttpResponseRedirect(reverse('entries', args=[title]))
+
+	# Display current contents
+	return render(request, "encyclopedia/edit.html", {
+            "entry": article,
+      						"name": title
+	})

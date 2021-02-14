@@ -13,6 +13,7 @@
 
 {% if entry %}
 {{ entry }}
+- <a href="{% url 'edit' name %}" class="edit">Edit this page</a>
 {% else %}
 We couldn't find any entry named "<em>{{ name }}"</em>.
 {% endif %}
