@@ -1,8 +1,16 @@
 from django.test import TestCase
 from functools import reduce
+import random
 
 # Create your tests here.
 
+
+# all = ['CSS', 'CSS3', 'Python']
+# print(len(all))
+
+# print(random.randint(0, len(all)))
+
+# print(all[0])
 
 # all = ['CSS', 'CSS3', 'Python']
 # query = 'C'
