@@ -7,10 +7,10 @@ New page - Encyclopedia
 {% block body %}
 <h2>Create a new page</h2>
 
-<form action="{% url 'new'%}" method="POST">
+<form action="{% url 'new' %}" method="POST">
 	{% csrf_token %}
 	<label for="title">Title:</label><br>
-	<input type="text" name="title"><br>
+	<input type="text" name="title" id="title"><br>
 	<label for="content">Article's body (markdown):</label><br>
 	<textarea name="content" id="content" cols="15" rows="6"></textarea>
 	<br>

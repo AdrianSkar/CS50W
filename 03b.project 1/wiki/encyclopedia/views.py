@@ -5,7 +5,6 @@ from django.urls import reverse
 
 from . import util
 
-
 # md to html
 import markdown2
 
@@ -73,7 +72,7 @@ def new(request):
 
         # If the page already exists
         if util.get_entry(title):
-            # prints the relative url only (YET)
+            
             link = request.build_absolute_uri(reverse("entries", args=[title]))
             link = f"<a href='{link}'>{reverse('entries', args=[title])}</a>"
 
