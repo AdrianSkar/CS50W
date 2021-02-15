@@ -108,7 +108,9 @@ def edit(request, title):
 
 
 def random_entry(request):
-    entries = util.list_entries()
-    rand = random.randint(0, len(entries)-1)
+    # entries = util.list_entries()
+    # rand = random.randint(0, len(entries)-1)
+    # return HttpResponseRedirect(reverse('entries', args=[entries[rand]]))
 
-    return HttpResponseRedirect(reverse('entries', args=[entries[rand]]))
+    rand_entry = random.sample(util.list_entries(), 1)
+    return HttpResponseRedirect(reverse('entries', args=rand_entry))

@@ -1,5 +1,4 @@
 from django.test import TestCase
-from functools import reduce
 import random
 
 # Create your tests here.
@@ -12,15 +11,18 @@ import random
 
 # print(all[0])
 
-# all = ['CSS', 'CSS3', 'Python']
-# query = 'C'
-# def subs_filter(query):
-#     # output_list = []
-#     entries = all
-#     result = list(filter(lambda k: query in k, entries))
-#     return result
+all = ['CSS', 'CSS3', 'Python']
+query = 'C'
 
-# print(subs_filter(query))
+
+def subs_filter(query):
+    # output_list = []
+    entries = all
+    result = list(filter(lambda k: query in k, entries))
+    return result
+
+
+print(subs_filter(query))
 
 # result = list(filter(lambda k: query in k, all))
 # print(result)
