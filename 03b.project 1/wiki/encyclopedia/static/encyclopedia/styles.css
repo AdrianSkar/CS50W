@@ -8,11 +8,6 @@ code {
     white-space: pre;
 }
 
-/* h1 {
-    margin-top: 0px;
-    padding-top: 20px;
-} */
-
 textarea {
     height: 90vh;
     width: 80%;
@@ -21,19 +16,41 @@ textarea {
 .main {
     padding: 1em;
 }
+.main ul .index{
+    list-style-type: "\203A";
+}
+.form-control{
+    width: 90%;
+}
+#content{
+min-height: 50vh;
+}
 
 .search {
     width: 100%;
     font-size: 15px;
     line-height: 15px;
+    
 }
 
 .sidebar {
     background-color: #f0f0f0;
-    height: 100vh;
-    padding: 1em 2em;
+    min-height: 100vh;
+    padding: 1em 1.5em;
+}
+.sidebar > * {
+    /* padding: 0.2em; */
 }
 
-/* .sidebar h2 {
-    margin-top: 5px;
-} */
+@media(max-width: 540px) {
+    .sidebar {
+        height: auto;
+        min-height: 2vh;
+    }
+    .main {
+        padding: 1em 1.5em;
+    }
+    .search {
+        width: auto;
+    }
+}

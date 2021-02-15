@@ -12,10 +12,10 @@ Editing {{ name }} - Encyclopedia
 <form action="{% url 'edit' name %}" method="POST">
 	{% csrf_token %}
 	<label for="content">Article's body (markdown):</label><br>
-	<textarea name="content" id="content" cols="15" rows="6">{{entry}}</textarea>
+	<textarea name="content" id="content" cols="15" rows="6" class="form-control">{{entry}}</textarea>
 	<br>
-	<input type="submit" value="Save article">
-	<input type="reset" value="Reset">
+	<input type="submit" value="Save article" class="btn btn-primary">
+	<input type="reset" value="Reset" class="btn btn-secondary">
 </form>
 
 {% endblock %}
