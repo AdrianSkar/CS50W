@@ -9,7 +9,7 @@ Higher order functions that can modify another functions
 
 def announce(f):
 	def wrapper():
-		print("About to run de function...")
+		print("About to run the function...")
 		f()
 		print("...done running the function.")
 	return wrapper
