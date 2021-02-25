@@ -3,7 +3,7 @@ from .models import *
 
 
 class ListingAdmin(admin.ModelAdmin):
-	list_display = ('title', 'desc')
+	list_display = ('title', 'desc', 'start_bid', 'image_url', 'category')
 
 
 # Register your models here.

@@ -78,8 +78,8 @@ def create_listing(request):
 			                  start_bid=start_bid, image_url=image_url, category=category)
 			listing.save()
 		except IntegrityError:
-			return render(request, "auctions/register.html", {
-				"message": "Username already taken."
+			return render(request, "auctions/create.html", {
+				"message": "Invalid listing, try again."
 			})
 	categories = Category.objects.all()
 	return render(request, "auctions/create.html", {
