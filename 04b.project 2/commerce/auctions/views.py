@@ -65,19 +65,23 @@ def register(request):
 
 def create_listing(request):
 	if request.method == 'POST':
-		pass
 		title = request.POST["title"]
 		description = request.POST["description"]
-		# start_bid = request.POST["start_bid"]
-		# image_url = request.POST["image_url"]
+		start_bid = float(request.POST["start_bid"])
+		image_url = request.POST["image_url"]
+		category_id = int(request.POST["category"])
+		category = Category.objects.get(pk=category_id)
 
 		# Create listing
 		try:
-			listing = Listing(title=title, desc=description)
+			listing = Listing(title=title, desc=description,
+			                  start_bid=start_bid, image_url=image_url, category=category)
 			listing.save()
 		except IntegrityError:
 			return render(request, "auctions/register.html", {
 				"message": "Username already taken."
 			})
-
-	return render(request, "auctions/create.html")
+	categories = Category.objects.all()
+	return render(request, "auctions/create.html", {
+		"categories": categories
+	})
