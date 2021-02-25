@@ -25,8 +25,9 @@ class Comment(models.Model):
 class Listing(models.Model):
     title = models.CharField(max_length=64)
     desc = models.CharField(max_length=300)
-    start_bid = models.DecimalField(max_digits=5, decimal_places=2)
-    # curr_bid = models.IntegerField(blank=True)
+    start_bid = models.DecimalField(max_digits=10, decimal_places=2)
+    curr_bid = models.DecimalField(
+        max_digits=10, decimal_places=2, blank=True, null=True)
     image_url = models.URLField(max_length=200)
     category = models.ForeignKey(
         Category, on_delete=models.SET_NULL, related_name='category', null=True)

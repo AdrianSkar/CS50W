@@ -1,0 +1,21 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+
+{{ listing }}
+<h2>Listing: {{ listing.title }}</h2>
+{% if listing.watchlist %}
+<button>Watched</button>
+{% else %}
+<button>Add to watchlist</button>
+{% endif %}
+<img src="{{ listing.image_url }}" alt="{{ listing.title }}'s image">
+<span><b>Price: </b>{{ listing.curr_bid|default:listing.start_bid }}</span>
+<p>{{ listing.desc }}</p>
+
+<h4>Details:</h4>
+<ul>
+	<li>Listed by: To do</li>
+	<li>Category: {{ listing.category|default_if_none:"Uncategorized" }}</li>
+</ul>
+{% endblock %}

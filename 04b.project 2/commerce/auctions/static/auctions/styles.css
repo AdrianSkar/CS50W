@@ -1,3 +1,13 @@
 body {
     padding: 10px;
 }
+
+.listing hr {
+    width: 50%;
+    left: 0;
+}
+
+.listLink, .listLink:hover {
+    text-decoration: none;
+    color: black
+}

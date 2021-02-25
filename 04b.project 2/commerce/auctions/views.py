@@ -8,7 +8,10 @@ from .models import *
 
 
 def index(request):
-	return render(request, "auctions/index.html")
+	listings = Listing.objects.all()
+	return render(request, "auctions/index.html", {
+		"listings": listings
+	})
 
 
 def login_view(request):
@@ -84,4 +87,12 @@ def create_listing(request):
 	categories = Category.objects.all()
 	return render(request, "auctions/create.html", {
 		"categories": categories
+	})
+
+
+def listing(request, listing_id):
+	listing = Listing.objects.get(id=listing_id)
+
+	return render(request, "auctions/listing.html", {
+		"listing": listing
 	})
