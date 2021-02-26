@@ -72,17 +72,19 @@ def create_listing(request):
 		description = request.POST["description"]
 		start_bid = float(request.POST["start_bid"])
 		image_url = request.POST["image_url"]
-		category_id = int(request.POST["category"])
-		category = Category.objects.get(pk=category_id)
+
+		category = Category.objects.get(id=int(request.POST["category"]))
+		lister = User.objects.get(id=int(request.POST["user_id"]))
 
 		# Create listing
 		try:
 			listing = Listing(title=title, desc=description,
-			                  start_bid=start_bid, image_url=image_url, category=category)
+                            start_bid=start_bid, image_url=image_url, category=category, lister=lister)
 			listing.save()
-		except IntegrityError:
+		except IntegrityError as error:
 			return render(request, "auctions/create.html", {
-				"message": "Invalid listing, try again."
+				"message": "Invalid listing, try again.",
+				"details": (listing, error)
 			})
 	categories = Category.objects.all()
 	return render(request, "auctions/create.html", {
@@ -92,7 +94,9 @@ def create_listing(request):
 
 def listing(request, listing_id):
 	listing = Listing.objects.get(id=listing_id)
+	poster = listing.lister
 
 	return render(request, "auctions/listing.html", {
-		"listing": listing
+		"listing": listing,
+		"lister": poster
 	})

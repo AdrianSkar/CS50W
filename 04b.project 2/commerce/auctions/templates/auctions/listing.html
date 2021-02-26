@@ -15,7 +15,8 @@
 
 <h4>Details:</h4>
 <ul>
-	<li>Listed by: To do</li>
+	<li>Listed by: {{ lister }}</li>
 	<li>Category: {{ listing.category|default_if_none:"Uncategorized" }}</li>
 </ul>
+
 {% endblock %}

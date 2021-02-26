@@ -5,10 +5,15 @@
 <h2>Create listing</h2>
 {% if message %}
 <h3>{{ message }}</h3>
+<p>{{ details }}</p>
 {% endif %}
+
+{{ user }}
+{{ user.id }}
 
 <form action="{% url 'create' %}" method="post">
 	{% csrf_token %}
+	<input type="hidden" name="user_id" value={{ user.id }}>
 	<div class="form-group">
 		<input class="form-control" type="text" name="title" placeholder="Title">
 	</div>
