@@ -12,7 +12,13 @@
 <img src="{{ listing.image_url }}" alt="{{ listing.title }}'s image">
 <span><b>Price: </b>{{ listing.curr_bid|default:listing.start_bid }}</span>
 <p>{{ listing.desc }}</p>
-
+	<form action="{% url 'bid'%}" method="POST">
+		{% csrf_token %}
+		<input type="hidden" name="user_id" value={{ user.id }}>
+		<input type="hidden" name="listing_id" value={{ listing.id }}>
+		<input class="form-control" type="number" step=".01" name="curr_bid" placeholder="Your bid">
+		<button type="submit">Place bid</button>
+	</form>
 <h4>Details:</h4>
 <ul>
 	<li>Listed by: {{ lister }}</li>

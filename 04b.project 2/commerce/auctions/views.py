@@ -100,3 +100,18 @@ def listing(request, listing_id):
 		"listing": listing,
 		"lister": poster
 	})
+
+
+def bid(request):
+	if request.method == 'POST':
+		bid = float(request.POST['curr_bid'])
+		bidder = User.objects.get(id=int(request.POST['user_id']))
+
+		# Make bid
+		try:
+			bid = Bid(amount=bid, bidder=bidder)
+			bid.save()
+
+		except IntegrityError as error:
+			return render(request, "auctions/listing.html", {"listing_id": 1, "message": error})
+	return HttpResponse('all ok')
