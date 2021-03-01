@@ -16,7 +16,7 @@
 
 
 <img src="{{ listing.image_url }}" alt="{{ listing.title }}'s image">
-<span><b>Price: </b>{{ listing.curr_bid|default:listing.start_bid }}</span>
+<span><b>Price: </b>{{ last_bid|default:listing.start_bid }}</span>
 <p>{{ listing.desc }}</p>
 	<form action="{% url 'bid'%}" method="POST">
 		{% csrf_token %}

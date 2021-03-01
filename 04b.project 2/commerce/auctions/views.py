@@ -95,11 +95,13 @@ def create_listing(request):
 def listing(request, listing_id):
 	listing = Listing.objects.get(id=listing_id)
 	poster = listing.lister
-	print(f"requst is {dir(request)}")
-	return render(request, "auctions/listing.html", {
+	context = {
 		"listing": listing,
-		"lister": poster
-	})
+		"lister": poster,
+		"last_bid": listing.list_bid.last().amount,
+		"last_bidder": listing.list_bid.last().bidder.username,
+	}
+	return render(request, "auctions/listing.html", context)
 
 
 def bid(request):
