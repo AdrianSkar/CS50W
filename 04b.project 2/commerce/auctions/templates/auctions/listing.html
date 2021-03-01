@@ -4,11 +4,17 @@
 
 {{ listing }}
 <h2>Listing: {{ listing.title }}</h2>
+{% if message %}
+<div>{{ message }}</div>
+{% endif %}
+
 {% if listing.watchlist %}
 <button>Watched</button>
 {% else %}
 <button>Add to watchlist</button>
 {% endif %}
+
+
 <img src="{{ listing.image_url }}" alt="{{ listing.title }}'s image">
 <span><b>Price: </b>{{ listing.curr_bid|default:listing.start_bid }}</span>
 <p>{{ listing.desc }}</p>

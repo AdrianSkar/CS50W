@@ -95,7 +95,7 @@ def create_listing(request):
 def listing(request, listing_id):
 	listing = Listing.objects.get(id=listing_id)
 	poster = listing.lister
-
+	print(f"requst is {dir(request)}")
 	return render(request, "auctions/listing.html", {
 		"listing": listing,
 		"lister": poster
@@ -106,12 +106,16 @@ def bid(request):
 	if request.method == 'POST':
 		bid = float(request.POST['curr_bid'])
 		bidder = User.objects.get(id=int(request.POST['user_id']))
+		listing_id = int(request.POST['listing_id'])
+		listing = Listing.objects.get(id=listing_id)
+		if bid > listing.list_bid.last().amount:
+			# Make bid
+			try:
+				bid = Bid(amount=bid, bidder=bidder, listing= listing)
+				bid.save()
 
-		# Make bid
-		try:
-			bid = Bid(amount=bid, bidder=bidder)
-			bid.save()
-
-		except IntegrityError as error:
-			return render(request, "auctions/listing.html", {"listing_id": 1, "message": error})
-	return HttpResponse('all ok')
+			except IntegrityError as error:
+				return render(request, "auctions/listing.html", {"listing": listing_id, "message": error})
+		else:
+		 return render(request, "auctions/listing.html", {"listing": listing, "message": 'Your bid must be higher than the current one.'})
+	return render(request, "auctions/listing.html", {"listing": listing, "message": 'Thank you for your bid.'})
