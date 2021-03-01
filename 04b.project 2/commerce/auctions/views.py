@@ -99,11 +99,17 @@ def create_listing(request):
 def listing(request, listing_id):
 	listing = Listing.objects.get(id=listing_id)
 	poster = listing.lister
+	if listing.list_bid.last():
+		last_bid = listing.list_bid.last().amount
+		last_bidder = listing.list_bid.last().bidder.username
+	else:
+		last_bid = ''
+		last_bidder = ''
 	context = {
 		"listing": listing,
 		"lister": poster,
-		"last_bid": listing.list_bid.last().amount,
-		"last_bidder": listing.list_bid.last().bidder.username,
+		"last_bid": last_bid,
+		"last_bidder": last_bidder,
 	}
 	return render(request, "auctions/listing.html", context)
 
@@ -114,7 +120,9 @@ def bid(request):
 		bidder = User.objects.get(id=int(request.POST['user_id']))
 		listing_id = int(request.POST['listing_id'])
 		listing = Listing.objects.get(id=listing_id)
-		if bid > listing.list_bid.last().amount:
+
+		test = listing.list_bid.last().amount or 0
+		if bid > test and bid > listing.start_bid:
 			# Make bid
 			try:
 				bid = Bid(amount=bid, bidder=bidder, listing= listing)

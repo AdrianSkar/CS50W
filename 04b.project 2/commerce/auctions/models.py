@@ -19,10 +19,6 @@ class Listing(models.Model):
     title = models.CharField(max_length=64)
     desc = models.CharField(max_length=300)
     start_bid = models.DecimalField(max_digits=10, decimal_places=2)
-    curr_bid = models.DecimalField(
-        max_digits=10, decimal_places=2, blank=True, null=True)
-    curr_bidder = models.ForeignKey(
-        User, on_delete=models.CASCADE, related_name='curr_bidder', blank=True, null=True)
     image_url = models.URLField(max_length=200, blank=True, null=True)
     category = models.ForeignKey(
         Category, on_delete=models.SET_NULL, related_name='category', null=True)
