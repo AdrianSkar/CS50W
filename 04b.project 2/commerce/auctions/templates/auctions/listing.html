@@ -2,11 +2,12 @@
 
 {% block body %}
 
-{{ listing }}
-<h2>Listing: {{ listing.title }}</h2>
+
 {% if message %}
 <div>{{ message }}</div>
 {% endif %}
+
+<h2>Listing: {{ listing.title }}</h2>
 
 {% if listing.watchlist %}
 <button>Watched</button>

@@ -81,10 +81,14 @@ def create_listing(request):
 			listing = Listing(title=title, desc=description,
                             start_bid=start_bid, image_url=image_url, category=category, lister=lister)
 			listing.save()
+			return render(request, "auctions/listing.html", {
+				"listing": Listing.objects.last(),
+				"message": 'Thank you for your listing!'
+			})
 		except IntegrityError as error:
 			return render(request, "auctions/create.html", {
 				"message": "Invalid listing, try again.",
-				"details": (listing, error)
+				# "details": (listing, error)
 			})
 	categories = Category.objects.all()
 	return render(request, "auctions/create.html", {
