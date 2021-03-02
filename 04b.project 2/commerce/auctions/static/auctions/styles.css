@@ -11,3 +11,7 @@ body {
     text-decoration: none;
     color: black
 }
+
+img {
+    width: 40vw;
+}

@@ -71,7 +71,7 @@ def create_listing(request):
 		title = request.POST["title"]
 		description = request.POST["description"]
 		start_bid = float(request.POST["start_bid"])
-		image_url = request.POST["image_url"]
+		image_url = request.POST["image_url"] or "https://images.pexels.com/photos/4439444/pexels-photo-4439444.jpeg"
 
 		category = Category.objects.get(id=int(request.POST["category"]))
 		lister = User.objects.get(id=int(request.POST["user_id"]))
