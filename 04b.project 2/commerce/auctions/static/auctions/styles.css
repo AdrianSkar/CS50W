@@ -2,7 +2,7 @@ body {
     padding: 10px;
 }
 
-.listing hr {
+hr {
     width: 50%;
     left: 0;
 }
@@ -12,6 +12,7 @@ body {
     color: black
 }
 
-img {
-    width: 40vw;
+.card img {
+    width: 100%;
+    object-fit: cover;
 }

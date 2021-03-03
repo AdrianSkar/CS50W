@@ -7,24 +7,26 @@
 <div>{{ message }}</div>
 {% endif %}
 
-<h2>Listing: {{ listing.title }}</h2>
+<h2>{{ listing.title }}</h2>
+
+<img src="{{ listing.image_url }}" alt="{{ listing.title }}'s image" class="rounded "><br>
+
+<span><b>Price: </b>{{ last_bid|default:listing.start_bid }}</span>
+<p>{{ listing.desc }}</p>
 
 {% if listing.watchlist %}
 <button>Watched</button>
 {% else %}
-<button>Add to watchlist</button>
+<button class="btn btn-primary btn-sm">Add to watchlist</button><br>
 {% endif %}
 
 
-<img src="{{ listing.image_url }}" alt="{{ listing.title }}'s image">
-<span><b>Price: </b>{{ last_bid|default:listing.start_bid }}</span>
-<p>{{ listing.desc }}</p>
 	<form action="{% url 'bid'%}" method="POST">
 		{% csrf_token %}
 		<input type="hidden" name="user_id" value={{ user.id }}>
 		<input type="hidden" name="listing_id" value={{ listing.id }}>
 		<input class="form-control" type="number" step=".01" name="curr_bid" placeholder="Your bid">
-		<button type="submit">Place bid</button>
+		<button type="submit" class="btn btn-primary btn-sm">Place bid</button>
 	</form>
 <h4>Details:</h4>
 <ul>
