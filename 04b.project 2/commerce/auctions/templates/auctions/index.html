@@ -21,13 +21,13 @@
 							<span>Category: {{ listing.category|default_if_none:"Uncategorized" }}
 							</span>
 						</div>
+					</div>
+				</div>
 						<a href="{% url 'listing' listing.id %}" class="listLink stretched-link"></a>
-						</div>
-						</div>
-						</div>
-						</div>
+			</div>
+		</div>
 		{% endfor %}
 	</div>
 
-	</div>
+</div>
 {% endblock %}

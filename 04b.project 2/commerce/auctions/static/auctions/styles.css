@@ -2,10 +2,6 @@ body {
     padding: 10px;
 }
 
-hr {
-    width: 50%;
-    left: 0;
-}
 
 .listLink, .listLink:hover {
     text-decoration: none;
@@ -15,4 +11,8 @@ hr {
 .card img {
     width: 100%;
     object-fit: cover;
+}
+
+#bid_form > *{
+    margin-bottom:0.5vh
 }

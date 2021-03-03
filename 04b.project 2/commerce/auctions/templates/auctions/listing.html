@@ -7,31 +7,35 @@
 <div>{{ message }}</div>
 {% endif %}
 
-<h2>{{ listing.title }}</h2>
+<div class="container">
+	<h2>{{ listing.title }}</h2>
+	{% if listing.watchlist %}
+	<button class="btn badge bg-success mb-2">Watching</button>
+	{% else %}
+	<button class="btn badge bg-secondary mb-2">Add to watchlist</button><br>
+	{% endif %}
 
-<img src="{{ listing.image_url }}" alt="{{ listing.title }}'s image" class="rounded "><br>
+	<div class="row mb-2">
+		<img src="{{ listing.image_url }}" alt="{{ listing.title }}'s image" class="rounded col-6">
 
-<span><b>Price: </b>{{ last_bid|default:listing.start_bid }}</span>
-<p>{{ listing.desc }}</p>
+		<div class="col-6">
+			<p>{{ listing.desc }}</p>
+			<span><b>Price: </b>{{ last_bid|default:listing.start_bid }}</span>
 
-{% if listing.watchlist %}
-<button>Watched</button>
-{% else %}
-<button class="btn btn-primary btn-sm">Add to watchlist</button><br>
-{% endif %}
-
-
-	<form action="{% url 'bid'%}" method="POST">
-		{% csrf_token %}
-		<input type="hidden" name="user_id" value={{ user.id }}>
-		<input type="hidden" name="listing_id" value={{ listing.id }}>
-		<input class="form-control" type="number" step=".01" name="curr_bid" placeholder="Your bid">
-		<button type="submit" class="btn btn-primary btn-sm">Place bid</button>
-	</form>
-<h4>Details:</h4>
-<ul>
-	<li>Listed by: {{ lister }}</li>
-	<li>Category: {{ listing.category|default_if_none:"Uncategorized" }}</li>
-</ul>
+			<form action="{% url 'bid'%}" method="POST" id='bid_form'>
+				{% csrf_token %}
+				<input type="hidden" name="user_id" value={{ user.id }}>
+				<input type="hidden" name="listing_id" value={{ listing.id }}>
+				<input class="form-control" type="number" step=".01" name="curr_bid" placeholder="Your bid">
+				<button type="submit" class="btn btn-primary btn-sm">Place bid</button>
+			</form>
+		</div>
+		</div>
+	<h4>Details:</h4>
+	<ul>
+		<li>Listed by: {{ lister }}</li>
+		<li>Category: {{ listing.category|default_if_none:"Uncategorized" }}</li>
+	</ul>
+</div>
 
 {% endblock %}
