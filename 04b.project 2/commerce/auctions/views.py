@@ -5,6 +5,7 @@ from django.shortcuts import render
 from django.urls import reverse
 
 from .models import *
+from .forms import *
 
 
 def index(request):
@@ -65,38 +66,30 @@ def register(request):
 	else:
 		return render(request, "auctions/register.html")
 
+def create_listing_view(request):
+	form = CreateListingForm(request.POST or None)
 
-def create_listing(request):
-	if request.method == 'POST':
-		title = request.POST["title"]
-		description = request.POST["description"]
-		start_bid = float(request.POST["start_bid"])
-		image_url = request.POST["image_url"] or "https://images.pexels.com/photos/4439444/pexels-photo-4439444.jpeg"
-
-		category = Category.objects.get(id=int(request.POST["category"]))
-		lister = User.objects.get(id=int(request.POST["user_id"]))
-
-		# Create listing
+	if form.is_valid():
 		try:
-			listing = Listing(title=title, desc=description,
-                            start_bid=start_bid, image_url=image_url, category=category, lister=lister)
-			listing.save()
+			obj = form.save(commit=False)
+			obj.lister = request.user
+			obj.save()
+			form = CreateListingForm()
 			return render(request, "auctions/listing.html", {
 				"listing": Listing.objects.last(),
 				"message": 'Thank you for your listing!'
 			})
 		except IntegrityError as error:
-			return render(request, "auctions/create.html", {
+			return render(request, "auctions/listing.html",{
 				"message": "Invalid listing, try again.",
 				# "details": (listing, error)
 			})
-	categories = Category.objects.all()
-	return render(request, "auctions/create.html", {
-		"categories": categories
+	return render(request, 'auctions/create.html', {
+		'form': form
 	})
 
 
-def listing(request, listing_id):
+def listing_view(request, listing_id):
 	listing = Listing.objects.get(id=listing_id)
 	poster = listing.lister
 	if listing.list_bid.last():
@@ -105,6 +98,7 @@ def listing(request, listing_id):
 	else:
 		last_bid = ''
 		last_bidder = ''
+
 	context = {
 		"listing": listing,
 		"lister": poster,
@@ -133,3 +127,12 @@ def bid(request):
 		else:
 		 return render(request, "auctions/listing.html", {"listing": listing, "message": 'Your bid must be higher than the current one.'})
 	return render(request, "auctions/listing.html", {"listing": listing, "message": 'Thank you for your bid.'})
+
+# def bid_form_view(request):
+# 	form = BidForm(request.POST or None)
+# 	if form.is_valid():
+# 		form.save()
+# 		form = BidForm()
+# 	return render(request, 'auctions.listing.html', {
+# 		'form': form
+# 	})

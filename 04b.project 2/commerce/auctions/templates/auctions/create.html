@@ -11,7 +11,7 @@
 {{ user }}
 {{ user.id }}
 
-<form action="{% url 'create' %}" method="post">
+{% comment %} <form action="{% url 'create' %}" method="post">
 	{% csrf_token %}
 	<input type="hidden" name="user_id" value={{ user.id }}>
 	<div class="form-group">
@@ -36,6 +36,14 @@
 	</div>
 	<input class="btn btn-primary" type="submit" value="Create">
 	<input class="btn btn-secondary" type="reset" value="Reset">
+</form> {% endcomment %}
+
+{% comment %} forms.py {% endcomment %}
+
+<form action="{% url 'create' %}" method='POST'>
+	{% csrf_token %}
+	{{ form.as_p }}
+	<input type="submit" value="save">
 </form>
 
 {% endblock %}

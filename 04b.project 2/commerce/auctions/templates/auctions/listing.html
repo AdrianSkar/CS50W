@@ -22,7 +22,7 @@
 			<p>{{ listing.desc }}</p>
 			<span><b>Price: </b>{{ last_bid|default:listing.start_bid }}</span>
 
-			<form action="{% url 'bid'%}" method="POST" class='small_form'>
+			<form action="{% url 'bid' %}" method="POST" class='small_form'>
 				{% csrf_token %}
 				<input type="hidden" name="user_id" value={{ user.id }}>
 				<input type="hidden" name="listing_id" value={{ listing.id }}>
