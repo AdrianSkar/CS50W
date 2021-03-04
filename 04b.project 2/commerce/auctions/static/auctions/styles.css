@@ -13,6 +13,6 @@ body {
     object-fit: cover;
 }
 
-#bid_form > *{
+.small_form > *{
     margin-bottom:0.5vh
 }
