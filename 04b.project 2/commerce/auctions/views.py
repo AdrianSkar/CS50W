@@ -67,14 +67,19 @@ def register(request):
 		return render(request, "auctions/register.html")
 
 def create_listing_view(request):
+	# This allows to render an empty form if there's no POST request
 	form = CreateListingForm(request.POST or None)
 
 	if form.is_valid():
 		try:
+			# Hold form and add who is listing it
 			obj = form.save(commit=False)
 			obj.lister = request.user
+			# Add default image if none is provided
+			if not obj.image_url:
+				obj.image_url = "https://images.pexels.com/photos/4439444/pexels-photo-4439444.jpeg"
+			# Save form and redirect to that listing
 			obj.save()
-			form = CreateListingForm()
 			return render(request, "auctions/listing.html", {
 				"listing": Listing.objects.last(),
 				"message": 'Thank you for your listing!'
