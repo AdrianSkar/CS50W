@@ -40,7 +40,7 @@ def logout_view(request):
 	return HttpResponseRedirect(reverse("index"))
 
 
-def register(request):
+def register_view(request):
 	if request.method == "POST":
 		username = request.POST["username"]
 		email = request.POST["email"]
@@ -104,40 +104,41 @@ def listing_view(request, listing_id):
 		last_bid = ''
 		last_bidder = ''
 
+	bid_form = BidForm()
 	context = {
 		"listing": listing,
 		"lister": poster,
 		"last_bid": last_bid,
 		"last_bidder": last_bidder,
+		"form": bid_form
 	}
 	return render(request, "auctions/listing.html", context)
 
 
-def bid(request):
-	if request.method == 'POST':
-		bid = float(request.POST['curr_bid'])
-		bidder = User.objects.get(id=int(request.POST['user_id']))
-		listing_id = int(request.POST['listing_id'])
-		listing = Listing.objects.get(id=listing_id)
+def bid_view(request, listing_id):
+	form = BidForm(request.POST or None)
+	listing = Listing.objects.get(id=listing_id)
 
-		test = listing.list_bid.last().amount or 0
-		if bid > test and bid > listing.start_bid:
+	if form.is_valid():
+		if float(form.data['amount']) > listing.start_bid:
 			# Make bid
 			try:
-				bid = Bid(amount=bid, bidder=bidder, listing= listing)
-				bid.save()
+				obj = form.save(commit=False)
+				obj.bidder = request.user
+				obj.listing = listing
+				obj.save()
 
 			except IntegrityError as error:
 				return render(request, "auctions/listing.html", {"listing": listing_id, "message": error})
 		else:
-		 return render(request, "auctions/listing.html", {"listing": listing, "message": 'Your bid must be higher than the current one.'})
-	return render(request, "auctions/listing.html", {"listing": listing, "message": 'Thank you for your bid.'})
-
-# def bid_form_view(request):
-# 	form = BidForm(request.POST or None)
-# 	if form.is_valid():
-# 		form.save()
-# 		form = BidForm()
-# 	return render(request, 'auctions.listing.html', {
-# 		'form': form
-# 	})
+		 return render(request, "auctions/listing.html", {
+			 "listing": listing, 
+			 "form": form,
+			 "alert_type": "alert-warning",
+			 "message": 'Your bid must be higher than the current one.'
+			 })
+	return render(request, "auctions/listing.html", {
+		"listing": listing, 
+		"form": form,
+		"alert_type": "alert-success",
+		"message": 'Thank you for your bid!'})

@@ -3,14 +3,10 @@ from django import forms
 from .models import *
 
 class BidForm(forms.ModelForm):
-
-
 	class Meta:
 		model = Bid
 		fields = [
-			'amount', 
-			'bidder', 
-			'listing'
+			'amount'
 		]
 
 class CreateListingForm(forms.ModelForm):

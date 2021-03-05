@@ -4,12 +4,12 @@
 
 
 <div class="container">
-{% if message %}
-<div class="alert {{ alert_type }} alert-dismissible fade show" role="alert">
-	{{ message }}
-	<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-</div>
-{% endif %}
+	{% if message %}
+	<div class="alert alert-success alert-dismissible fade show" role="alert">
+		{{ message }}
+		<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+	</div>
+	{% endif %}
 	<h2>{{ listing.title }}</h2>
 	{% if listing.watchlist %}
 	<button class="btn badge bg-success mb-2">Watching</button>
@@ -22,16 +22,17 @@
 
 		<div class="col-6">
 			<p>{{ listing.desc }}</p>
-			<span><b>Current price: </b>{{ last_bid|default:listing.start_bid }}</span>
+			<span><b>Price: </b>{{ last_bid|default:listing.start_bid }}</span>
 
-			<form action="{% url 'bid' listing.id %}" method='POST'>
+			<form action="{% url 'bid' %}" method="POST" class='small_form'>
 				{% csrf_token %}
+				<input type="hidden" name="user_id" value={{ user.id }}>
 				<input type="hidden" name="listing_id" value={{ listing.id }}>
-				{{ form.as_p }}
-				<input type="submit" value="Place bid">
+				<input class="form-control" type="number" step=".01" name="curr_bid" placeholder="Your bid">
+				<button type="submit" class="btn btn-primary btn-sm">Place bid</button>
 			</form>
 		</div>
-		</div>
+	</div>
 	<h4>Details:</h4>
 	<ul>
 		<li>Listed by: {{ lister }}</li>
