@@ -125,6 +125,7 @@ def bid_view(request, listing_id):
 			try:
 				obj = form.save(commit=False)
 				obj.bidder = request.user
+				listing.start_bid = obj.amount
 				obj.listing = listing
 				obj.save()
 
