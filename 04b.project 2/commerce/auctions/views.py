@@ -105,9 +105,13 @@ def listing_view(request, listing_id):
 		last_bidder = ''
 
 	# Process bid form or make default
-	bid_form = BidForm(request.POST or None)
+	curr_bid = float(listing.start_bid)
+	test = {
+		"amount": curr_bid + 0.01
+	}
+	bid_form = BidForm(request.POST or None, initial=test)
 	if bid_form.is_valid():
-		if float(bid_form.cleaned_data['amount']) > float(listing.start_bid):
+		if float(bid_form.cleaned_data['amount']) > curr_bid:
 			# Make bid
 			try:
 				# Save new amounts and bidder to objects before proccessing them
@@ -137,7 +141,7 @@ def listing_view(request, listing_id):
 				"alert_type": "alert-warning",
 				"message": 'Your bid must be higher than the current one.'
 				})
-	
+
 	context = {
 		"listing": listing,
 		"last_bid": last_bid,
