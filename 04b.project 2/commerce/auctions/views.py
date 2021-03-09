@@ -80,16 +80,11 @@ def create_listing_view(request):
 				obj.image_url = "https://images.pexels.com/photos/4439444/pexels-photo-4439444.jpeg"
 			# Save form and redirect to that listing
 			obj.save()
-			return render(request, "auctions/listing.html", {
-				"listing": Listing.objects.last(),
-				"message": 'Thank you for your listing!'
-			})
-			# This has no context: research on session or other way to pass the feedback
-			# listing = Listing.objects.last()
-			# return HttpResponseRedirect(reverse('listing', args=(listing.id,)))
+			listing = Listing.objects.last()
+			return HttpResponseRedirect(reverse('listing', args=(listing.id,)))
 
 		except IntegrityError as error:
-			return render(request, "auctions/listing.html",{
+			return render(request, "auctions/create.html",{
 				"message": "Invalid listing, try again.",
 				# "details": (listing, error)
 			})
