@@ -10,6 +10,12 @@ class BidForm(forms.ModelForm):
 		]
 
 class CreateListingForm(forms.ModelForm):
+	#  https://stackoverflow.com/a/29717314
+	def __init__(self, *args, **kwargs):
+		super(CreateListingForm, self).__init__(*args, **kwargs)
+		for visible in self.visible_fields():
+			visible.field.widget.attrs['class'] = 'form-control'
+
 	class Meta:
 		model = Listing
 		fields = [

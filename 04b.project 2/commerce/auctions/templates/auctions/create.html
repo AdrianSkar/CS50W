@@ -2,15 +2,17 @@
 
 {% block body %}
 
+<div class="container">
 <h2>Create listing</h2>
 {% if message %}
 <h3>{{ message }}</h3>
 <p>{{ details }}</p>
 {% endif %}
-<form action="{% url 'create' %}" method='POST'>
-	{% csrf_token %}
-	{{ form.as_p }}
-	<input type="submit" value="save">
-</form>
+	<form action="{% url 'create' %}" method='POST'>
+		{% csrf_token %}
+		{{ form.as_p }}
+		<input type="submit" value="Save" class="btn btn-primary">
+	</form>
+</div>
 
 {% endblock %}

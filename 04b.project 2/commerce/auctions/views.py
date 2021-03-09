@@ -84,6 +84,10 @@ def create_listing_view(request):
 				"listing": Listing.objects.last(),
 				"message": 'Thank you for your listing!'
 			})
+			# This has no context: research on session or other way to pass the feedback
+			# listing = Listing.objects.last()
+			# return HttpResponseRedirect(reverse('listing', args=(listing.id,)))
+
 		except IntegrityError as error:
 			return render(request, "auctions/listing.html",{
 				"message": "Invalid listing, try again.",
@@ -121,6 +125,8 @@ def bid_view(request, listing_id):
 
 	if form.is_valid():
 		if float(form.data['amount']) > listing.start_bid:
+			print(form.data['amount'])
+			print(listing.start_bid)
 			# Make bid
 			try:
 				obj = form.save(commit=False)
@@ -130,7 +136,16 @@ def bid_view(request, listing_id):
 				obj.save()
 
 			except IntegrityError as error:
-				return render(request, "auctions/listing.html", {"listing": listing_id, "message": error})
+				return render(request, "auctions/listing.html", {
+					"listing": listing_id, 
+					"message": error
+					})
+			return render(request, "auctions/listing.html", {
+				"listing": listing, 
+				"form": form,
+				"alert_type": "alert-success",
+				"message": 'Thank you for your bid!'})
+
 		else:
 		 return render(request, "auctions/listing.html", {
 			 "listing": listing, 
@@ -140,6 +155,5 @@ def bid_view(request, listing_id):
 			 })
 	return render(request, "auctions/listing.html", {
 		"listing": listing, 
-		"form": form,
-		"alert_type": "alert-success",
-		"message": 'Thank you for your bid!'})
+		"form": form
+		})
