@@ -24,7 +24,7 @@
 			<p>{{ listing.desc }}</p>
 			<span><b>Current price: </b>{{ last_bid|default:listing.start_bid }}</span>
 
-			<form action="{% url 'bid' listing.id %}" method='POST'>
+			<form action="{% url 'listing' listing.id %}" method='POST'>
 				{% csrf_token %}
 				<input type="hidden" name="listing_id" value={{ listing.id }}>
 				{{ form.as_p }}

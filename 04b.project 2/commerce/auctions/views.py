@@ -96,6 +96,7 @@ def create_listing_view(request):
 def listing_view(request, listing_id):
 	listing = Listing.objects.get(id=listing_id)
 
+	# Check for previous bids
 	if listing.list_bid.last():
 		last_bid = float(listing.list_bid.last().amount)
 		last_bidder = listing.list_bid.last().bidder.username
@@ -103,7 +104,39 @@ def listing_view(request, listing_id):
 		last_bid = ''
 		last_bidder = ''
 
-	bid_form = BidForm()
+	# Process bid form or make default
+	bid_form = BidForm(request.POST or None)
+	if bid_form.is_valid():
+		if float(bid_form.cleaned_data['amount']) > listing.start_bid:
+			# print(bid_form.cleaned_data['amount'])
+			# print(listing.start_bid)
+			# Make bid
+			try:
+				obj = bid_form.save(commit=False)
+				obj.bidder = request.user
+				listing.start_bid = obj.amount
+				obj.listing = listing
+				obj.save()
+
+			except IntegrityError as error:
+				return render(request, "auctions/listing.html", {
+					"listing": listing, 
+					"message": error
+					})
+			return render(request, "auctions/listing.html", {
+				"listing": listing, 
+				"form": bid_form,
+				"alert_type": "alert-success",
+				"message": 'Thank you for your bid!'})
+
+		else:
+			return render(request, "auctions/listing.html", {
+				"listing": listing, 
+				"form": bid_form,
+				"alert_type": "alert-warning",
+				"message": 'Your bid must be higher than the current one.'
+				})
+
 	context = {
 		"listing": listing,
 		"last_bid": last_bid,
@@ -112,42 +145,3 @@ def listing_view(request, listing_id):
 	}
 	return render(request, "auctions/listing.html", context)
 
-
-def bid_view(request, listing_id):
-	form = BidForm(request.POST or None)
-	listing = Listing.objects.get(id=listing_id)
-
-	if form.is_valid():
-		if float(form.cleaned_data['amount']) > listing.start_bid:
-			print(form.cleaned_data['amount'])
-			print(listing.start_bid)
-			# Make bid
-			try:
-				obj = form.save(commit=False)
-				obj.bidder = request.user
-				listing.start_bid = obj.amount
-				obj.listing = listing
-				obj.save()
-
-			except IntegrityError as error:
-				return render(request, "auctions/listing.html", {
-					"listing": listing_id, 
-					"message": error
-					})
-			return render(request, "auctions/listing.html", {
-				"listing": listing, 
-				"form": form,
-				"alert_type": "alert-success",
-				"message": 'Thank you for your bid!'})
-
-		else:
-		 return render(request, "auctions/listing.html", {
-			 "listing": listing, 
-			 "form": form,
-			 "alert_type": "alert-warning",
-			 "message": 'Your bid must be higher than the current one.'
-			 })
-	return render(request, "auctions/listing.html", {
-		"listing": listing, 
-		"form": form
-		})
