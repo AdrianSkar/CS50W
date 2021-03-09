@@ -107,14 +107,14 @@ def listing_view(request, listing_id):
 	# Process bid form or make default
 	bid_form = BidForm(request.POST or None)
 	if bid_form.is_valid():
-		if float(bid_form.cleaned_data['amount']) > listing.start_bid:
-			# print(bid_form.cleaned_data['amount'])
-			# print(listing.start_bid)
+		if float(bid_form.cleaned_data['amount']) > float(listing.start_bid):
 			# Make bid
 			try:
+				# Save new amounts and bidder to objects before proccessing them
 				obj = bid_form.save(commit=False)
 				obj.bidder = request.user
 				listing.start_bid = obj.amount
+				listing.save()
 				obj.listing = listing
 				obj.save()
 
@@ -123,12 +123,13 @@ def listing_view(request, listing_id):
 					"listing": listing, 
 					"message": error
 					})
+			# Success feedback and render
 			return render(request, "auctions/listing.html", {
 				"listing": listing, 
 				"form": bid_form,
 				"alert_type": "alert-success",
 				"message": 'Thank you for your bid!'})
-
+		# Not enough amount feedback and render
 		else:
 			return render(request, "auctions/listing.html", {
 				"listing": listing, 
@@ -136,7 +137,7 @@ def listing_view(request, listing_id):
 				"alert_type": "alert-warning",
 				"message": 'Your bid must be higher than the current one.'
 				})
-
+	
 	context = {
 		"listing": listing,
 		"last_bid": last_bid,
