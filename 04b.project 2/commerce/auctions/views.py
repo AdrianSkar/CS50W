@@ -95,9 +95,9 @@ def create_listing_view(request):
 
 def listing_view(request, listing_id):
 	listing = Listing.objects.get(id=listing_id)
-	poster = listing.lister
+
 	if listing.list_bid.last():
-		last_bid = listing.list_bid.last().amount
+		last_bid = float(listing.list_bid.last().amount)
 		last_bidder = listing.list_bid.last().bidder.username
 	else:
 		last_bid = ''
@@ -106,7 +106,6 @@ def listing_view(request, listing_id):
 	bid_form = BidForm()
 	context = {
 		"listing": listing,
-		"lister": poster,
 		"last_bid": last_bid,
 		"last_bidder": last_bidder,
 		"form": bid_form
@@ -119,8 +118,8 @@ def bid_view(request, listing_id):
 	listing = Listing.objects.get(id=listing_id)
 
 	if form.is_valid():
-		if float(form.data['amount']) > listing.start_bid:
-			print(form.data['amount'])
+		if float(form.cleaned_data['amount']) > listing.start_bid:
+			print(form.cleaned_data['amount'])
 			print(listing.start_bid)
 			# Make bid
 			try:
