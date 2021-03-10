@@ -12,6 +12,9 @@ body {
     width: 100%;
     object-fit: cover;
 }
+#logo{
+    width: 10vw;
+}
 
 .listing_img {object-fit: cover;}
 
