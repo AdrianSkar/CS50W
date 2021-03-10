@@ -22,7 +22,13 @@
 
 		<div class="col-6">
 			<p>{{ listing.desc }}</p>
-			<span><b>Current price: </b>{{ last_bid|default:listing.start_bid }}</span>
+			<p><b>Current price: </b>{{ last_bid|default:listing.start_bid }}</p>
+			<p><span> {{ num_bids }} bid(s) so far.
+					{% ifequal listing.lister.username user.username%}
+					Your bid is the current one.
+					{% endifequal %}
+
+				</span></p>
 
 			<form action="{% url 'listing' listing.id %}" method='POST'>
 				{% csrf_token %}

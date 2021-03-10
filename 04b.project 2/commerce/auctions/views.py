@@ -104,6 +104,9 @@ def listing_view(request, listing_id):
 		last_bid = ''
 		last_bidder = ''
 
+	# num of bids
+	num_bids = Bid.objects.filter(listing=listing).count() or 0
+
 	# Process bid form or make default
 	curr_bid = float(listing.start_bid)
 	test = {
@@ -132,6 +135,7 @@ def listing_view(request, listing_id):
 				"listing": listing, 
 				"form": bid_form,
 				"alert_type": "alert-success",
+				"num_bids": num_bids,
 				"message": 'Thank you for your bid!'})
 		# Not enough amount feedback and render
 		else:
@@ -139,6 +143,7 @@ def listing_view(request, listing_id):
 				"listing": listing, 
 				"form": bid_form,
 				"alert_type": "alert-warning",
+				"num_bids": num_bids,
 				"message": 'Your bid must be higher than the current one.'
 				})
 
@@ -146,7 +151,8 @@ def listing_view(request, listing_id):
 		"listing": listing,
 		"last_bid": last_bid,
 		"last_bidder": last_bidder,
-		"form": bid_form
+		"form": bid_form,
+		"num_bids": num_bids
 	}
 	return render(request, "auctions/listing.html", context)
 
