@@ -21,3 +21,7 @@ body {
 .small_form > *{
     margin-bottom:0.5vh
 }
+
+.bid_field{
+    width: auto !important;
+}

@@ -1,5 +1,5 @@
 {% extends "auctions/layout.html" %}
-
+<title>{% block title %}Create listing | Commerce auctions{% endblock %}</title>
 {% block body %}
 
 <div class="container">
@@ -10,7 +10,7 @@
 {% endif %}
 	<form action="{% url 'create' %}" method='POST'>
 		{% csrf_token %}
-		{{ form.as_p }}
+		{{ form }}
 		<input type="submit" value="Save" class="btn btn-primary">
 	</form>
 </div>

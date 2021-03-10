@@ -1,5 +1,5 @@
 {% extends "auctions/layout.html" %}
-
+<title>{% block title %}{{ listing.title }} | Commerce auctions{% endblock %}</title>
 {% block body %}
 
 
@@ -27,8 +27,8 @@
 			<form action="{% url 'listing' listing.id %}" method='POST'>
 				{% csrf_token %}
 				<input type="hidden" name="listing_id" value={{ listing.id }}>
-				{{ form.as_p }}
-				<input type="submit" value="Place bid">
+					{{ form }}
+					<input type="submit" value="Place bid" class="btn btn-primary">
 			</form>
 		</div>
 		</div>
