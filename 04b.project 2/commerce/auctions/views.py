@@ -1,8 +1,9 @@
 from django.contrib.auth import authenticate, login, logout
 from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.urls import reverse
+from django.contrib.auth.decorators import login_required
 
 from .models import *
 from .forms import *
@@ -14,6 +15,7 @@ def index(request):
 		"listings": listings
 	})
 
+@login_required(login_url = 'login')
 def watchlist_view(request):
 	user = User.objects.get(id=request.user.id)
 	watched_items = user.watchlist.all()
@@ -33,7 +35,8 @@ def login_view(request):
 		# Check if authentication successful
 		if user is not None:
 			login(request, user)
-			return HttpResponseRedirect(reverse("index"))
+			next_url = request.POST.get('next')
+			return redirect(next_url)
 		else:
 			return render(request, "auctions/login.html", {
 				"message": "Invalid username and/or password."
@@ -73,6 +76,7 @@ def register_view(request):
 	else:
 		return render(request, "auctions/register.html")
 
+@login_required(login_url = 'login')
 def create_listing_view(request):
 	# This allows to render an empty form if there's no POST request
 	form = CreateListingForm(request.POST or None)
@@ -102,8 +106,8 @@ def create_listing_view(request):
 
 def listing_view(request, listing_id):
 	listing = Listing.objects.get(id=listing_id)
-	user = User.objects.get(id=request.user.id)
-	listing.watched = listing in user.watchlist.all()
+
+	
 
 	# Check for previous bids
 	if listing.list_bid.last():
@@ -125,6 +129,8 @@ def listing_view(request, listing_id):
 
 	# Differentiate between forms
 	if request.method == 'POST':
+		user = User.objects.get(id=request.user.id)
+		listing.watched = listing in user.watchlist.all()
 		if 'watchlist' in request.POST:
 			print('WATCHLIST form')
 			# print(watched)

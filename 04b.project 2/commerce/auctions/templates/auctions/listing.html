@@ -13,6 +13,8 @@
 </div>
 {% endif %}
 	<h2>{{ listing.title }}</h2>
+{% comment %} Just for users {% endcomment %}
+{% if user.is_authenticated %}
 	<form action="{% url 'listing' listing.id %}" method="POST">
 		{% csrf_token %}
 		{% if listing.watched %}
@@ -23,7 +25,8 @@
 	<button type="submit" name="watchlist" class="btn badge bg-secondary mb-2" id="watchlist">Add to
 		watchlist</button><br>
 	{% endif %}
-</form>
+	</form>	
+{% endif %}
 
 	<div class="row mb-2">
 		<img src="{{ listing.image_url }}" alt="{{ listing.title }}'s image" class="rounded col-6 listing_img">
@@ -31,6 +34,8 @@
 		<div class="col-6">
 			<p>{{ listing.desc }}</p>
 			<p><b>Current price: </b>{{ last_bid|default:listing.start_bid }}</p>
+			{% comment %} Just for users {% endcomment %}
+			{% if user.is_authenticated %}
 			<p><span> {{ num_bids }} bid(s) so far.
 					{% ifequal listing.lister.username user.username%}
 					Your bid is the current one.
@@ -44,6 +49,7 @@
 					{{ form }}
 					<input type="submit" value="Place bid" class="btn btn-primary">
 			</form>
+			{% endif %}
 		</div>
 		</div>
 	<h4>Details:</h4>
