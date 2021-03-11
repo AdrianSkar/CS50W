@@ -14,6 +14,13 @@ def index(request):
 		"listings": listings
 	})
 
+def watchlist_view(request):
+	user = User.objects.get(id=request.user.id)
+	watched_items = user.watchlist.all()
+
+	return render(request, "auctions/watchlist.html",{
+		"watched_listings": watched_items
+	})
 
 def login_view(request):
 	if request.method == "POST":
@@ -95,6 +102,8 @@ def create_listing_view(request):
 
 def listing_view(request, listing_id):
 	listing = Listing.objects.get(id=listing_id)
+	user = User.objects.get(id=request.user.id)
+	listing.watched = listing in user.watchlist.all()
 
 	# Check for previous bids
 	if listing.list_bid.last():
@@ -112,40 +121,60 @@ def listing_view(request, listing_id):
 	test = {
 		"amount": curr_bid + 0.01
 	}
-	bid_form = BidForm(request.POST or None, initial=test)
-	if bid_form.is_valid():
-		if float(bid_form.cleaned_data['amount']) > curr_bid:
-			# Make bid
-			try:
-				# Save new amounts and bidder to objects before proccessing them
-				obj = bid_form.save(commit=False)
-				obj.bidder = request.user
-				listing.start_bid = obj.amount
-				listing.save()
-				obj.listing = listing
-				obj.save()
+	bid_form = BidForm(None, initial=test)
 
-			except IntegrityError as error:
-				return render(request, "auctions/listing.html", {
-					"listing": listing, 
-					"message": error
-					})
-			# Success feedback and render
-			return render(request, "auctions/listing.html", {
-				"listing": listing, 
-				"form": bid_form,
-				"alert_type": "alert-success",
-				"num_bids": num_bids,
-				"message": 'Thank you for your bid!'})
-		# Not enough amount feedback and render
+	# Differentiate between forms
+	if request.method == 'POST':
+		if 'watchlist' in request.POST:
+			print('WATCHLIST form')
+			# print(watched)
+			if listing.watched:
+				user.watchlist.remove(listing)
+				user.save()
+				print(f"removed {listing}")
+				return HttpResponseRedirect(reverse('listing', args=(listing.id,)))
+			else:
+				user.watchlist.add(listing)
+				user.save()
+				print(f"appended {listing}")
+				return HttpResponseRedirect(reverse('listing', args=(listing.id,)))
 		else:
-			return render(request, "auctions/listing.html", {
-				"listing": listing, 
-				"form": bid_form,
-				"alert_type": "alert-warning",
-				"num_bids": num_bids,
-				"message": 'Your bid must be higher than the current one.'
-				})
+			print('BID form')
+			bid_form = BidForm(request.POST)
+			if bid_form.is_valid():
+				if float(bid_form.cleaned_data['amount']) > curr_bid:
+					# Make bid
+					try:
+						# Save new amounts and bidder to objects before proccessing them
+						obj = bid_form.save(commit=False)
+						obj.bidder = request.user
+						listing.start_bid = obj.amount
+						listing.save()
+						obj.listing = listing
+						obj.save()
+
+					except IntegrityError as error:
+						return render(request, "auctions/listing.html", {
+							"listing": listing, 
+							"message": error
+							})
+					# Success feedback and render
+					return render(request, "auctions/listing.html", {
+						"listing": listing, 
+						"form": bid_form,
+						"alert_type": "alert-success",
+						"num_bids": num_bids,
+						"message": 'Thank you for your bid!'})
+				# Not enough amount feedback and render
+				else:
+					return render(request, "auctions/listing.html", {
+						"listing": listing, 
+						"form": bid_form,
+						"alert_type": "alert-warning",
+						"num_bids": num_bids,
+						"message": 'Your bid must be higher than the current one.'
+						})
+
 
 	context = {
 		"listing": listing,

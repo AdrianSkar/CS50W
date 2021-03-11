@@ -2,6 +2,10 @@ from django import forms
 
 from .models import *
 
+
+# class WatchForm(forms.Form):
+# 	status = forms.BooleanField()
+
 class BidForm(forms.ModelForm):
 	amount = forms.DecimalField(
 			label ="Bid amount", 

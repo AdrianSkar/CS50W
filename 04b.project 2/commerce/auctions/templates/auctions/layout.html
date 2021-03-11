@@ -28,7 +28,7 @@
 					<a class="nav-item nav-link" href="{% url 'index' %}">Active listings</a>
 					<a class="nav-item nav-link" href="#">Categories</a>
 					{% if user.is_authenticated %}
-					<a class="nav-item nav-link" href="#">Watchlist</a>
+					<a class="nav-item nav-link" href="{% url 'watchlist' %}">Watchlist</a>
 					<a class="nav-item nav-link" href="{% url 'create' %}">Create listing</a>
 					<a class="nav-item nav-link" href="{% url 'logout' %}">Log out</a>
 					{% else %}
