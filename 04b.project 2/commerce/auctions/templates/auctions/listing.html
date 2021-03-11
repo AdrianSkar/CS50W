@@ -1,6 +1,6 @@
 {% extends "auctions/layout.html" %}
 {% load static %}
-<title>{% block title %}{{ listing.title }} | Commerce auctions{% endblock %}</title>
+{% block title %}{{ listing.title }} | Commerce auctions{% endblock %}
 {% block body %}
 
 {% comment %} <script type="text/javascript" src="{% static 'auctions/toggle.js' %}">
