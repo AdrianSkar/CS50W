@@ -124,8 +124,6 @@ def create_listing_view(request):
 def listing_view(request, listing_id):
 	listing = Listing.objects.get(id=listing_id)
 
-	
-
 	# Check for previous bids
 	if listing.list_bid.last():
 		last_bid = float(listing.list_bid.last().amount)
@@ -185,6 +183,8 @@ def listing_view(request, listing_id):
 					return render(request, "auctions/listing.html", {
 						"listing": listing, 
 						"form": bid_form,
+						"last_bid": last_bid,
+						"last_bidder": last_bidder,
 						"alert_type": "alert-success",
 						"num_bids": num_bids,
 						"message": 'Thank you for your bid!'})
@@ -193,6 +193,8 @@ def listing_view(request, listing_id):
 					return render(request, "auctions/listing.html", {
 						"listing": listing, 
 						"form": bid_form,
+						"last_bid": last_bid,
+						"last_bidder": last_bidder,
 						"alert_type": "alert-warning",
 						"num_bids": num_bids,
 						"message": 'Your bid must be higher than the current one.'
