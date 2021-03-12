@@ -33,7 +33,7 @@
 
 		<div class="col-6">
 			<p>{{ listing.desc }}</p>
-			<p><b>Current price: </b>{{ last_bid|default:listing.start_bid }}</p>
+			<p><b>Current price: </b>{{ last_bid|default:listing.price }}</p>
 			{% comment %} Just for users {% endcomment %}
 			{% if user.is_authenticated %}
 			<p>

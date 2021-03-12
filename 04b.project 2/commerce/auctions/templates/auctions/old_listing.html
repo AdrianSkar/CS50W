@@ -22,7 +22,7 @@
 
 		<div class="col-6">
 			<p>{{ listing.desc }}</p>
-			<span><b>Price: </b>{{ last_bid|default:listing.start_bid }}</span>
+			<span><b>Price: </b>{{ last_bid|default:listing.price }}</span>
 
 			<form action="{% url 'bid' %}" method="POST" class='small_form'>
 				{% csrf_token %}

@@ -12,7 +12,7 @@ def create_listing(request):
 	if request.method == 'POST':
 		title = request.POST["title"]
 		description = request.POST["description"]
-		start_bid = float(request.POST["start_bid"])
+		price = float(request.POST["price"])
 		image_url = request.POST["image_url"] or "https://images.pexels.com/photos/4439444/pexels-photo-4439444.jpeg"
 
 		category = Category.objects.get(id=int(request.POST["category"]))
@@ -21,7 +21,7 @@ def create_listing(request):
 		# Create listing
 		try:
 			listing = Listing(title=title, desc=description,
-                            start_bid=start_bid, image_url=image_url, category=category, lister=lister)
+                            price=price, image_url=image_url, category=category, lister=lister)
 			listing.save()
 			return render(request, "auctions/listing.html", {
 				"listing": Listing.objects.last(),
@@ -45,7 +45,7 @@ def bid_view(request):
 		listing = Listing.objects.get(id=listing_id)
 
 		test = listing.list_bid.last().amount or 0
-		if bid > test and bid > listing.start_bid:
+		if bid > test and bid > listing.price:
 			# Make bid
 			try:
 				bid = Bid(amount=bid, bidder=bidder, listing= listing)

@@ -14,7 +14,7 @@
 					<div class="card-body">
 						<h4 class="card-title">{{ listing.title }}</h4>
 						<div class="card-text">
-							<span><b>Price: </b>{{ listing.curr_bid|default:listing.start_bid }}
+							<span><b>Price: </b>{{ listing.curr_bid|default:listing.price }}
 							</span>
 							<p>{{ listing.desc }}</p>
 							<span>Category: {{ listing.category|default_if_none:"Uncategorized" }}

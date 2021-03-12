@@ -47,6 +47,6 @@ class CreateListingForm(forms.ModelForm):
 		fields = [
 			'title',
 			'desc',
-			'start_bid', 
+			'price', 
 			'image_url'
 		]

@@ -138,7 +138,7 @@ def listing_view(request, listing_id):
 	num_bids = Bid.objects.filter(listing=listing).count() or 0
 
 	# Process bid form or make default
-	curr_bid = float(listing.start_bid)
+	curr_bid = float(listing.price)
 	test = {
 		"amount": curr_bid + 0.01
 	}
@@ -171,7 +171,7 @@ def listing_view(request, listing_id):
 						# Save new amounts and bidder to objects before proccessing them
 						obj = bid_form.save(commit=False)
 						obj.bidder = request.user
-						listing.start_bid = obj.amount
+						listing.price = obj.amount
 						listing.save()
 						obj.listing = listing
 						obj.save()
