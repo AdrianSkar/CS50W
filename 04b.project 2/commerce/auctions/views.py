@@ -142,10 +142,12 @@ def listing_view(request, listing_id):
 	}
 	bid_form = BidForm(None, initial=test)
 
-	# Differentiate between forms
-	if request.method == 'POST':
+	if request.user.is_authenticated:
 		user = User.objects.get(id=request.user.id)
 		listing.watched = listing in user.watchlist.all()
+	
+	# Differentiate between forms
+	if request.method == 'POST':
 		if 'watchlist' in request.POST:
 			print('WATCHLIST form')
 			# print(watched)
