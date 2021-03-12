@@ -18,6 +18,22 @@ class BidForm(forms.ModelForm):
 		fields = [
 			'amount'
 		]
+class CommentForm(forms.ModelForm):
+	content = forms.CharField(
+			label = '',
+			widget=forms.Textarea(
+				attrs = {
+					'rows': 6, 
+					'placeholder':'Your comment',
+					'class': 'form-control mb-2'
+					}
+			)
+		)
+	class Meta:
+		model = Comment
+		fields = [
+			'content'
+		]
 
 class CreateListingForm(forms.ModelForm):
 	#  https://stackoverflow.com/a/29717314

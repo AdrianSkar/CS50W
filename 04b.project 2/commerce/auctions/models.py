@@ -34,6 +34,7 @@ class Bid(models.Model):
     amount = models.DecimalField(max_digits=10, decimal_places=2)
     bidder = models.ForeignKey(User, on_delete=models.CASCADE, related_name='bidder')
     listing = models.ForeignKey(Listing, on_delete=models.CASCADE, related_name="list_bid", null=True)
+    created_at = models.DateTimeField(auto_now_add=True, null=True)
 
     def __str__(self):
         return f"Bidder: {self.bidder}, amount: {self.amount}, listing: {self.listing}"
@@ -44,6 +45,7 @@ class Comment(models.Model):
     poster = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name='poster')
     listing = models.ForeignKey(Listing, on_delete=models.CASCADE, related_name="list_comment")
+    created_at = models.DateTimeField(auto_now_add=True, null=True)
 
     def __str__(self):
         return f"Poster: {self.poster}, comment: {self.content}"

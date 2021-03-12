@@ -141,6 +141,8 @@ def listing_view(request, listing_id):
 		"amount": curr_bid + 0.01
 	}
 	bid_form = BidForm(None, initial=test)
+	comment_form = CommentForm()
+	comments = Comment.objects.filter(listing=listing)
 
 	if request.user.is_authenticated:
 		user = User.objects.get(id=request.user.id)
@@ -148,9 +150,10 @@ def listing_view(request, listing_id):
 	
 	# Differentiate between forms
 	if request.method == 'POST':
+
+		## Watchlist form
 		if 'watchlist' in request.POST:
 			print('WATCHLIST form')
-			# print(watched)
 			if listing.watched:
 				user.watchlist.remove(listing)
 				user.save()
@@ -161,6 +164,26 @@ def listing_view(request, listing_id):
 				user.save()
 				print(f"appended {listing}")
 				return HttpResponseRedirect(reverse('listing', args=(listing.id,)))
+
+		## Comment form
+		elif 'comment' in request.POST:
+			print('COMMENT form')
+			comment_form = CommentForm(request.POST)
+			if comment_form.is_valid():
+				try:
+					obj = comment_form.save(commit=False)
+					obj.poster = request.user
+					obj.listing = listing
+					obj.save()
+				except IntegrityError as error:
+					return render(request, "auctions/listing.html", {
+						"listing": listing, 
+						"message": error
+						})
+				# Success comment
+				return HttpResponseRedirect(reverse('listing', args=(listing.id,)))
+
+		## Bid form
 		else:
 			print('BID form')
 			bid_form = BidForm(request.POST)
@@ -185,6 +208,8 @@ def listing_view(request, listing_id):
 					return render(request, "auctions/listing.html", {
 						"listing": listing, 
 						"form": bid_form,
+						"comment_form": comment_form,
+						"comments": comments,
 						"last_bid": last_bid,
 						"last_bidder": last_bidder,
 						"alert_type": "alert-success",
@@ -195,6 +220,8 @@ def listing_view(request, listing_id):
 					return render(request, "auctions/listing.html", {
 						"listing": listing, 
 						"form": bid_form,
+						"comment_form": comment_form,
+						"comments": comments,
 						"last_bid": last_bid,
 						"last_bidder": last_bidder,
 						"alert_type": "alert-warning",
@@ -208,6 +235,8 @@ def listing_view(request, listing_id):
 		"last_bid": last_bid,
 		"last_bidder": last_bidder,
 		"form": bid_form,
+		"comment_form": comment_form,
+		"comments": comments,
 		"num_bids": num_bids
 	}
 	return render(request, "auctions/listing.html", context)

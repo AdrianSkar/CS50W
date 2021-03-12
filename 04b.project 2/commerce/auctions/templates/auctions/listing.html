@@ -55,11 +55,41 @@
 			{% endif %}
 		</div>
 		</div>
-	<h4>Details:</h4>
-	<ul>
-		<li>Listed by: {{ listing.lister }}</li>
-		<li>Category: {{ listing.category|default_if_none:"Uncategorized" }}</li>
-	</ul>
-</div>
+	<div class="row">
+		<div class="col-auto">
+			<h4>Details:</h4>
+			<ul>
+				<li>Listed by: {{ listing.lister }}</li>
+				<li>Category: {{ listing.category|default_if_none:"Uncategorized" }}</li>
+			</ul>
+		</div>
+	</div>
+	{% if user.is_authenticated %}
+	<div class="row">
+		<h4>Comments:</h4>
+		<div class="col-auto m-2">
+			{% if comments %}
+			{% for comment in comments %}
+			<div class="card mb-2 p-2 bg-light">
+				<p>{{comment.content}}</p>
+				<i>by {{ comment.poster }}
+					<span class="smaller">at {{ comment.created_at|date:"H:i \o\n l jS F Y" }}</span>
+				</i>
+			</div>
+			{% endfor %}
+			{% else %}
+			<p>No comments yet.</p>
+			{% endif %}
+			<h5>Add yours:</h5>
+			<form action="{% url 'listing' listing.id %}" method="POST" class="mb-4">
+				{% csrf_token %}
+				{{ comment_form }}
+				<button type="submit" name="comment" class="btn btn-sm btn-outline-primary" id="comment_submit">Add
+					comment</button><br>
+			</form>
+		</div>
+	</div>
+	{% endif %}
+	</div>
 
 {% endblock %}
