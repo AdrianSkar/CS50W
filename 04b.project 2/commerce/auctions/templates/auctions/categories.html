@@ -1,0 +1,18 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+<h2>Categories</h2>
+<div class='container'>
+	<div class="row">
+
+		{% for category in categories %}
+		<div class="card col-sm-4 col-xl-3 m-4 p-2">
+			<img src="{{ category.cat_img }}" alt="{{ category.catName }}'s image" class="rounded listing_img">
+			<a href="{% url 'spec_category' category %}" class="listLink stretched-link">{{category}}</a>
+
+		</div>
+		{% endfor %}
+	</div>
+
+</div>
+{% endblock %}

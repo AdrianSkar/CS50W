@@ -15,6 +15,20 @@ def index(request):
 		"listings": listings
 	})
 
+def categories_view(request):
+	categories = Category.objects.all()
+	return render(request, "auctions/categories.html", {
+		"categories": categories
+	})
+def spec_category_view(request, category_name):
+	cat = Category.objects.get(catName=category_name)
+	listings = Listing.objects.filter(category=cat)
+	return render(request, "auctions/spec_category.html", {
+		"listings": listings,
+		"cat": cat
+	})
+
+
 @login_required(login_url = 'login')
 def watchlist_view(request):
 	user = User.objects.get(id=request.user.id)

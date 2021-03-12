@@ -1,0 +1,33 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+<h2>{{ cat.catName }}</h2>
+<div class='container'>
+	<div class="row">
+
+		{% for listing in listings %}
+		<div class="card col-12 mb-2 ">
+			<div class="row">
+
+				<div class="col-4"><img src="{{ listing.image_url }}" alt="{{ listing.title }}'s image">
+				</div>
+				<div class="col-8">
+					<div class="card-body">
+						<h4 class="card-title">{{ listing.title }}</h4>
+						<div class="card-text">
+							<span><b>Price: </b>{{ listing.curr_bid|default:listing.start_bid }}
+							</span>
+							<p>{{ listing.desc }}</p>
+							<span>Category: {{ listing.category|default_if_none:"Uncategorized" }}
+							</span>
+						</div>
+					</div>
+				</div>
+				<a href="{% url 'listing' listing.id %}" class="listLink stretched-link"></a>
+			</div>
+		</div>
+		{% endfor %}
+	</div>
+
+</div>
+{% endblock %}

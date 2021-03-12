@@ -2,7 +2,6 @@ body {
     padding: 10px;
 }
 
-
 .listLink, .listLink:hover {
     text-decoration: none;
     color: black
@@ -12,16 +11,20 @@ body {
     width: 100%;
     object-fit: cover;
 }
-#logo{
+
+#logo {
     width: 10vw;
 }
 
-.listing_img {object-fit: cover;}
-
-.small_form > *{
-    margin-bottom:0.5vh
+.listing_img {
+    object-fit: cover;
 }
 
-.bid_field{
+
+.small_form>* {
+    margin-bottom: 0.5vh
+}
+
+.bid_field {
     width: auto !important;
 }
