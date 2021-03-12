@@ -36,12 +36,15 @@
 			<p><b>Current price: </b>{{ last_bid|default:listing.start_bid }}</p>
 			{% comment %} Just for users {% endcomment %}
 			{% if user.is_authenticated %}
-			<p><span> {{ num_bids }} bid(s) so far.
-					{% ifequal listing.lister.username user.username%}
-					Your bid is the current one.
-					{% endifequal %}
-
-				</span></p>
+			<p>
+				<span> {{ num_bids }} bid(s) so far.
+					{% if  num_bids > 1 %}
+					{% ifequal listing.lister.username user.username %}
+						Your bid is the current one.
+						{% endifequal %}
+					{% endif %}
+					</span>
+					</p>
 
 			<form action="{% url 'listing' listing.id %}" method='POST'>
 				{% csrf_token %}
