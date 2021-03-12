@@ -124,25 +124,26 @@ def create_listing_view(request):
 def listing_view(request, listing_id):
 	listing = Listing.objects.get(id=listing_id)
 
-	# Check for previous bids
-	if listing.list_bid.last():
-		last_bid = float(listing.list_bid.last().amount)
-		last_bidder = listing.list_bid.last().bidder.username
-	else:
-		last_bid = ''
-		last_bidder = ''
+	# Check for previous bids/bidders
+	last_bid = float(listing.list_bid.last().amount) if listing.list_bid.last() else ''
+	last_bidder = listing.list_bid.last().bidder.username if listing.list_bid.last() else ''
 
-	# num of bids
-	num_bids = Bid.objects.filter(listing=listing).count() or 0
-
-	# Process bid form or make default
+	# Current bid + initial value display to make new bid
 	curr_bid = float(listing.price)
 	test = {
 		"amount": curr_bid + 0.01
 	}
-	bid_form = BidForm(None, initial=test)
-	comment_form = CommentForm()
-	comments = Comment.objects.filter(listing=listing)
+
+	# Define common params for returned view context
+	context = {
+		"listing": listing,
+		"form": BidForm(None, initial=test),
+		"comment_form": CommentForm(),
+		"comments": Comment.objects.filter(listing=listing),
+		"last_bid": last_bid,
+		"last_bidder": last_bidder,
+		"num_bids": Bid.objects.filter(listing=listing).count() or 0
+	}
 
 	if request.user.is_authenticated:
 		user = User.objects.get(id=request.user.id)
@@ -154,16 +155,17 @@ def listing_view(request, listing_id):
 		## Watchlist form
 		if 'watchlist' in request.POST:
 			print('WATCHLIST form')
+			ret_to_listing = HttpResponseRedirect(reverse('listing', args=(listing.id,)))
 			if listing.watched:
 				user.watchlist.remove(listing)
 				user.save()
 				print(f"removed {listing}")
-				return HttpResponseRedirect(reverse('listing', args=(listing.id,)))
+				return ret_to_listing
 			else:
 				user.watchlist.add(listing)
 				user.save()
 				print(f"appended {listing}")
-				return HttpResponseRedirect(reverse('listing', args=(listing.id,)))
+				return ret_to_listing
 
 		## Comment form
 		elif 'comment' in request.POST:
@@ -176,10 +178,8 @@ def listing_view(request, listing_id):
 					obj.listing = listing
 					obj.save()
 				except IntegrityError as error:
-					return render(request, "auctions/listing.html", {
-						"listing": listing, 
-						"message": error
-						})
+						context['message']=error
+						return render(request, "auctions/listing.html", context)
 				# Success comment
 				return HttpResponseRedirect(reverse('listing', args=(listing.id,)))
 
@@ -200,44 +200,17 @@ def listing_view(request, listing_id):
 						obj.save()
 
 					except IntegrityError as error:
-						return render(request, "auctions/listing.html", {
-							"listing": listing, 
-							"message": error
-							})
+						context['message']=error
+						return render(request, "auctions/listing.html", context)
 					# Success feedback and render
-					return render(request, "auctions/listing.html", {
-						"listing": listing, 
-						"form": bid_form,
-						"comment_form": comment_form,
-						"comments": comments,
-						"last_bid": last_bid,
-						"last_bidder": last_bidder,
-						"alert_type": "alert-success",
-						"num_bids": num_bids,
-						"message": 'Thank you for your bid!'})
+					context['message'] = 'Thank you for your bid!'
+					context['alert_type'] = 'alert-success'
+					return render(request, "auctions/listing.html", context)
 				# Not enough amount feedback and render
 				else:
-					return render(request, "auctions/listing.html", {
-						"listing": listing, 
-						"form": bid_form,
-						"comment_form": comment_form,
-						"comments": comments,
-						"last_bid": last_bid,
-						"last_bidder": last_bidder,
-						"alert_type": "alert-warning",
-						"num_bids": num_bids,
-						"message": 'Your bid must be higher than the current one.'
-						})
+					context['message']= 'Your bid must be higher than the current one.'
+					context['alert_type']= 'alert-warning'
+					return render(request, "auctions/listing.html", context)
 
-
-	context = {
-		"listing": listing,
-		"last_bid": last_bid,
-		"last_bidder": last_bidder,
-		"form": bid_form,
-		"comment_form": comment_form,
-		"comments": comments,
-		"num_bids": num_bids
-	}
 	return render(request, "auctions/listing.html", context)
 
