@@ -25,6 +25,8 @@
 				<a href="{% url 'listing' listing.id %}" class="listLink stretched-link"></a>
 			</div>
 		</div>
+		{% empty %}
+		<p>Your watchlist is empty. Take a look at our <a href="{% url 'index'%}">current listings</a>.</p>
 		{% endfor %}
 	</div>
 
