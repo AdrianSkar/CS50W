@@ -60,7 +60,13 @@
 			<h4>Details:</h4>
 			<ul>
 				<li>Listed by: {{ listing.lister }}</li>
-				<li>Category: {{ listing.category|default_if_none:"Uncategorized" }}</li>
+				<li>Category:
+					{% if listing.category %}
+					<a href="{% url 'spec_category' listing.category %}">{{ listing.category}}</a>
+					{% else %}
+					Uncategorized
+					{% endif %}
+				</li>
 			</ul>
 		</div>
 	</div>
