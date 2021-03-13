@@ -123,6 +123,7 @@ def create_listing_view(request):
 
 def listing_view(request, listing_id):
 	listing = Listing.objects.get(id=listing_id)
+	bids = Bid.objects.filter(listing=listing)
 
 	# Check for previous bids/bidders
 	last_bid = float(listing.list_bid.last().amount) if listing.list_bid.last() else ''
@@ -142,7 +143,8 @@ def listing_view(request, listing_id):
 		"comments": Comment.objects.filter(listing=listing),
 		"last_bid": last_bid,
 		"last_bidder": last_bidder,
-		"num_bids": Bid.objects.filter(listing=listing).count() or 0
+		"num_bids": bids.count() or 0,
+		"bids": bids.all()
 	}
 
 	if request.user.is_authenticated:

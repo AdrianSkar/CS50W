@@ -37,7 +37,8 @@
 			{% comment %} Just for users {% endcomment %}
 			{% if user.is_authenticated %}
 			<p>
-				<span> {{ num_bids }} bid(s) so far.
+				<span>{{ num_bids }} bid(s) so far.
+
 					{% if  num_bids > 1 %}
 					{% ifequal last_bidder user.username %}
 						Your bid is the current one.
@@ -51,6 +52,16 @@
 				<input type="hidden" name="listing_id" value={{ listing.id }}>
 					{{ form }}
 					<input type="submit" value="Place bid" class="btn btn-primary">
+				{% if num_bids > 1 %}
+				<input type="button" value="Bids list" class="btn btn-light btn-sm" data-bs-toggle="popover" title="Bids"
+					data-bs-content="
+				<ul class='listing_bid_popover'>
+					{% for bid in bids %}
+						<li>{{bid.amount}} by {{bid.bidder}} </li>
+					{% endfor %}
+				</ul>
+				" data-bs-trigger=' hover focus' data-bs-placement='right' data-bs-html='true'>
+				{% endif %}
 			</form>
 			{% endif %}
 		</div>
@@ -97,5 +108,13 @@
 	</div>
 	{% endif %}
 	</div>
-
+<script type='text/javascript'>
+	(function () {
+		var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
+		console.log('test')
+		var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
+			return new bootstrap.Popover(popoverTriggerEl)
+		})
+	})();
+</script>
 {% endblock %}
