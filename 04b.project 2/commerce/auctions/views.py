@@ -131,7 +131,7 @@ def listing_view(request, listing_id):
 	# Current bid + initial value display to make new bid
 	curr_bid = float(listing.price)
 	test = {
-		"amount": curr_bid + 0.01
+		"amount": '{:.2f}'.format(curr_bid + 0.01)
 	}
 
 	# Define common params for returned view context
