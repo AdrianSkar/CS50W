@@ -12,10 +12,15 @@
 	<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 </div>
 {% endif %}
-	<h2>{{ listing.title }}</h2>
+	<h2 style="display:inline">{{ listing.title }}</h2>
+	{% if listing.status %}
+	<div class="text-success" style='display:inline;'>Active</div>
+	{% else %}
+	<div class="text-warning" style='display:inline;'>Closed</div>
+	{% endif %}
 {% comment %} Just for users {% endcomment %}
 {% if user.is_authenticated %}
-	<form action="{% url 'listing' listing.id %}" method="POST">
+	<form action="{% url 'listing' listing.id %}" method="POST" class='mt-2'>
 		{% csrf_token %}
 		{% if listing.watched %}
 		<button type="submit" name="watchlist" class="btn badge bg-success mb-2" id="watchlist">Remove
@@ -23,7 +28,7 @@
 			watchlist</button>
 	{% else %}
 	<button type="submit" name="watchlist" class="btn badge bg-secondary mb-2" id="watchlist">Add to
-		watchlist</button><br>
+		watchlist</button>
 	{% endif %}
 	</form>	
 {% endif %}
