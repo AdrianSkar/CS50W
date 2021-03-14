@@ -154,6 +154,15 @@ def listing_view(request, listing_id):
 	# Differentiate between forms
 	if request.method == 'POST':
 
+		## Close form
+		if 'close' in request.POST:
+			print('CLOSE form')
+			ret_to_listing = HttpResponseRedirect(reverse('listing', args=(listing.id,)))
+			listing.status = False
+			listing.save()
+			print(f"Status is now {listing.status}")
+			return ret_to_listing
+
 		## Watchlist form
 		if 'watchlist' in request.POST:
 			print('WATCHLIST form')

@@ -30,6 +30,9 @@
 	<button type="submit" name="watchlist" class="btn badge bg-secondary mb-2" id="watchlist">Add to
 		watchlist</button>
 	{% endif %}
+	{% if listing.status and user == listing.lister %}
+	<button type="submit" name="close" class="btn badge bg-danger mb-2" id="watchlist">Close</button>
+	{% endif %}
 	</form>	
 {% endif %}
 
