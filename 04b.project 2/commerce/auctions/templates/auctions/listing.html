@@ -45,9 +45,9 @@
 			{% comment %} Just for users {% endcomment %}
 			{% if user.is_authenticated %}
 			<p>
-				<span>{{ num_bids }} bid(s) so far.
+				<span>{{ num_bids }} bid(s).
 
-					{% if  num_bids > 1 %}
+					{% if  num_bids > 1  and listing.status %}
 					{% ifequal last_bidder user.username %}
 						Your bid is the current one.
 						{% endifequal %}
@@ -55,6 +55,7 @@
 					</span>
 					</p>
 
+			{% if listing.status %}
 			<form action="{% url 'listing' listing.id %}" method='POST'>
 				{% csrf_token %}
 				<input type="hidden" name="listing_id" value={{ listing.id }}>
@@ -71,7 +72,10 @@
 				" data-bs-trigger=' hover focus' data-bs-placement='right' data-bs-html='true'>
 				{% endif %}
 			</form>
+			{% elif user.username == last_bidder %}
+			<span class="fw-bold shadow-sm border p-2 bg-light text-success">You won!</span>
 			{% endif %}
+{% endif %}
 		</div>
 		</div>
 	<div class="row">
@@ -96,7 +100,7 @@
 		<div class="col-auto m-2">
 			{% if comments %}
 			{% for comment in comments %}
-			<div class="card mb-2 p-2 bg-light">
+			<div class="card mb-2 p-2 bg-light shadow-sm">
 				<p>{{comment.content}}</p>
 				<i>by {{ comment.poster }}
 					<span class="smaller">at {{ comment.created_at|date:"H:i \o\n l jS F Y" }}</span>
