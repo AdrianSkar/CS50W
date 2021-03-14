@@ -22,7 +22,7 @@ class Listing(models.Model):
     price = models.DecimalField(max_digits=10, decimal_places=2)
     image_url = models.URLField(max_length=200, blank=True, null=True)
     category = models.ForeignKey(
-        Category, on_delete=models.SET_NULL, related_name='category', null=True)
+        Category, on_delete=models.SET_NULL, related_name='category', blank=True, null=True)
     lister = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name='lister')
     created_at = models.DateTimeField(auto_now_add=True, null=True)
