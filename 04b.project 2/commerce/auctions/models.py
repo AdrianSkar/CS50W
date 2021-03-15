@@ -28,7 +28,7 @@ class Listing(models.Model):
     created_at = models.DateTimeField(auto_now_add=True, null=True)
 
     def __str__(self):
-        return f"{self.title}, {self.desc}"
+        return f"Title: {self.title}, status: {self.status}, category: {self.category}, price: {self.price}"
 
 
 class Bid(models.Model):
@@ -49,4 +49,4 @@ class Comment(models.Model):
     created_at = models.DateTimeField(auto_now_add=True, null=True)
 
     def __str__(self):
-        return f"Poster: {self.poster}, comment: {self.content}"
+        return f"Poster: {self.poster}, comment: {self.content}, listing: {self.listing.title}"
