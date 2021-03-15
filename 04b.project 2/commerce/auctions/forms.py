@@ -54,16 +54,12 @@ class CreateListingForm(forms.ModelForm):
 		})
 	)
 
-	category = forms.ModelChoiceField(
-		queryset=Category.objects.all(),
-		widget=forms.Select(attrs = {'class': 'form-select'}),
-		required=False	
-		)
 	class Meta:
 		model = Listing
 		fields = [
 			'title',
 			'desc',
 			'price', 
-			'image_url'
+			'image_url',
+			'category'
 		]
